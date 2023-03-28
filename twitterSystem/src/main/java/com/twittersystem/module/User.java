@@ -17,7 +17,7 @@ public class User {
 //    名字
     private String userName;
 //    id号
-    private Integer userId;
+    private Long userId;
 //    密码
     private String password;
 }

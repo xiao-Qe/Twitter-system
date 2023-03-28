@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author xiaoQe
  * @version 1.0
@@ -13,8 +15,8 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UserMapper {
-    @Select("select * from user")
-    User selectTest();
+//    @Select("select * from user")
+    List<User> selectTest();
 
     Integer insertUser(User user);
 }

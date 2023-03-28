@@ -1,8 +1,5 @@
 package com.twittersystem.service;
 
-import com.twittersystem.module.User;
-import org.springframework.stereotype.Service;
-
 /**
  * @author xiaoQe
  * @version 1.0
@@ -10,5 +7,7 @@ import org.springframework.stereotype.Service;
  */
 
 public interface IUserService {
-    public Integer addUser(User user);
+    Boolean addUser(String userName, String password);
+
+    
 }

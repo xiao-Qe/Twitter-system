@@ -3,6 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.twittersystem.mapper.UserMapper">
+    <resultMap id="intToLong" type="java.util.Map">
+        <result property="userName" column="user_name" javaType="java.lang.String"></result>
+        <result property="userId" column="user_id" javaType="java.lang.Long"></result>
+        <result property="password" column="password" javaType="java.lang.String"></result>
+    </resultMap>
+<!--    select-->
+    <select id="selectTest" resultMap="intToLong">
+        select * from user
+    </select>
+
 <!--public Integer insertUser(User user);-->
     <insert id="insertUser">
         insert into user

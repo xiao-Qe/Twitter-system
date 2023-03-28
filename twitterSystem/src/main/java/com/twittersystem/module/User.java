@@ -20,4 +20,6 @@ public class User {
     private Long userId;
 //    密码
     private String password;
+//    权限
+    private Integer power;
 }

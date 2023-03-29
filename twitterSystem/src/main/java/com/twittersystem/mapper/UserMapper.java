@@ -18,5 +18,23 @@ public interface UserMapper {
 //    @Select("select * from user")
     List<User> selectTest();
 
+    /**
+     * @description: 用户注册，添加用户
+     * @author xiaoQe
+     * @date 2023/3/29 14:54
+     * @version 1.0
+     */
     Integer insertUser(User user);
+
+    /**
+     * @description: 用户登录查询接口
+     * @author xiaoQe
+     * @date 2023/3/29 15:32
+     * @version 1.0
+     */
+    @Select("select user_id from user where user_id = #{userId} and password = MD5(#{password})")
+    Long selectUser(Long userId,String password);
+
+    @Select("select user_name,user_id from user where user_id = #{userId}")
+    User selectFromUserId(Long userId);
 }

@@ -16,10 +16,13 @@ class TwitterSystemApplicationTests {
     @Autowired
     UserMapper userMapper;
 
+
+
     @Test
     void contextLoads() {
         System.out.println(userMapper.selectTest());
     }
+
 
     @Test
     void testFunction(){

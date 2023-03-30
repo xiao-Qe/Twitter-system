@@ -4,6 +4,7 @@ import com.twittersystem.mapper.ClassifyMapper;
 import com.twittersystem.mapper.UserMapper;
 import com.twittersystem.module.User;
 import com.twittersystem.utils.JWTUtil;
+import com.twittersystem.utils.TwitterUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @SpringBootTest
-class TwitterSystemApplicationTests {
+class TwitterCardInfoSystemApplicationTests {
 
     @Autowired
     UserMapper userMapper;
@@ -28,6 +29,11 @@ class TwitterSystemApplicationTests {
     @Test
     void testClassify(){
         System.out.println(classifyMapper.selectClassBySuperId(1000));
+    }
+
+    @Test
+    void testTwitterIdUtil(){
+        System.out.println(TwitterUtil.getTwitterId(1679992299416L));
     }
 
     @Test

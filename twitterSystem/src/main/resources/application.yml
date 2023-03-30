@@ -56,3 +56,13 @@ mybatis:
 jwt:
   secret : "twitter_system_secret_my_name_xiaoQe"
   expire : 4  #单位小时
+
+#id加密配置
+twitter:
+  encryptionArr :
+    - 3
+    - 2
+    - 4
+    - 1
+    - 7
+    - 8

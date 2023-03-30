@@ -17,4 +17,13 @@ public class Constant {
     //权限
     public static final Integer USER = 0;
     public static final Integer ROOT = 1;
+
+    //文章类型
+    public static final Integer TWITTER_TYPE_PRIVATE = 0;   //私密
+    public static final Integer TWITTER_TYPE_PUBLIC = 1;    //公开
+
+    //文章状态
+    public static final Integer TWITTER_STATE_AUDIT = 0;  //审核
+    public static final Integer TWITTER_STATE_PASS = 1;  //通过
+    public static final Integer TWITTER_STATE_UNDERCARRIAGE = 2;  //下架
 }

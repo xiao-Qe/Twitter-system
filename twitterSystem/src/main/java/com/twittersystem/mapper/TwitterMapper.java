@@ -1,5 +1,7 @@
 package com.twittersystem.mapper;
 
+import com.twittersystem.module.InsertTwitter;
+import com.twittersystem.module.TwitterInfo;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +13,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface TwitterMapper {
-
+    Integer insertTwitter(InsertTwitter insertTwitter,Long creatTime);
 }

@@ -1,0 +1,42 @@
+package com.twittersystem.controller;
+
+import com.twittersystem.bean.ResBean;
+import com.twittersystem.module.Classify;
+import com.twittersystem.service.IClassifyService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
+/**
+ * @author xiaoQe
+ * @version 1.0
+ * @data 2023/3/30 14:48
+ */
+@RequestMapping("/twitter")
+@RestController
+public class TwitterController {
+
+    @Autowired
+    private IClassifyService classifyService;
+
+    @ApiOperation("获取所有大分类id及分类名")
+    @GetMapping("/get_super_id")
+    public ResBean getSuperClass(){
+        List<Classify> superClassify = classifyService.getAllSuperClassify();
+        return ResBean.ok("ok",superClassify);
+    }
+
+    @ApiOperation("获取每个分类下的小分类")
+    @GetMapping("/get_classify_by_super_id")
+    public ResBean getClassifyBySuperId(@NotNull @RequestParam("superId")Integer superId){
+        List<Classify> classifyBySuperId = classifyService.getClassifyBySuperId(superId);
+        return ResBean.ok("ok",classifyBySuperId);
+    }
+}

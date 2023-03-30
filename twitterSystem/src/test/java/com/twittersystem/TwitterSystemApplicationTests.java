@@ -1,5 +1,6 @@
 package com.twittersystem;
 
+import com.twittersystem.mapper.ClassifyMapper;
 import com.twittersystem.mapper.UserMapper;
 import com.twittersystem.module.User;
 import com.twittersystem.utils.JWTUtil;
@@ -16,13 +17,18 @@ class TwitterSystemApplicationTests {
     @Autowired
     UserMapper userMapper;
 
-
+    @Autowired
+    ClassifyMapper classifyMapper;
 
     @Test
     void contextLoads() {
         System.out.println(userMapper.selectTest());
     }
 
+    @Test
+    void testClassify(){
+        System.out.println(classifyMapper.selectClassBySuperId(1000));
+    }
 
     @Test
     void testFunction(){

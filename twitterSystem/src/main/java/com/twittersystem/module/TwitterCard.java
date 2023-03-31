@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
  * @author xiaoQe
  * @version 1.0
  * @data 2023/3/30 16:06
+ * 返回推荐文章时所传出的类
  */
 @Data
 @AllArgsConstructor

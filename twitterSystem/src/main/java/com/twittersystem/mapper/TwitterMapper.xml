@@ -19,6 +19,9 @@
             <if test="insertTwitter.state != null">
                 `state`,
             </if>
+            <if test="insertTwitter.title != null">
+                title,
+            </if>
             <if test="insertTwitter.authorId != null">
                 author_id,
             </if>
@@ -44,6 +47,9 @@
             </if>
             <if test="insertTwitter.state != null">
                 #{insertTwitter.state},
+            </if>
+            <if test="insertTwitter.title != null">
+                #{insertTwitter.title},
             </if>
             <if test="insertTwitter.authorId != null">
                 #{insertTwitter.authorId,jdbcType=BIGINT},

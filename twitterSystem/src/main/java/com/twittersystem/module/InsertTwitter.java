@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
  * @author xiaoQe
  * @version 1.0
  * @data 2023/3/30 16:11
+ * 添加文章时所传入的类
  */
 @Data
 @AllArgsConstructor

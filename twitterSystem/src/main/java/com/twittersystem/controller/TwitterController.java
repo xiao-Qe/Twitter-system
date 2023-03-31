@@ -54,7 +54,6 @@ public class TwitterController {
         insertTwitter.setId(twitterId);
         insertTwitter.setState(Constant.TWITTER_STATE_AUDIT);
 
-        System.out.println(insertTwitter);
         Boolean success = twitterService.addTwitter(insertTwitter);
         if(success){
             return ResBean.ok("ok");

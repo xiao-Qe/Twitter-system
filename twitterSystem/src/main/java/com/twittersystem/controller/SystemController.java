@@ -6,12 +6,11 @@ import com.twittersystem.service.ISystemService;
 import com.twittersystem.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,11 +28,18 @@ public class SystemController {
     @ApiOperation("注册用户")
     @PostMapping("/register")
     public ResBean registerUser(@Valid @RequestBody User user){
-        Boolean addSuccess = systemService.registerUser(user.getUserName(), user.getPassword());
-        if(addSuccess){
-            return ResBean.ok("ok");
-        }else {
+        Long userId = Calendar.getInstance().getTimeInMillis();
+        String token = systemService.registerUser(userId,user.getUserName(), user.getPassword());
+        if(token == null || token.equals("")){
             return ResBean.badRequest("添加出错");
+        }else {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("token",token);
+            User userInfo = new User();
+            userInfo.setUserName(user.getUserName());
+            userInfo.setUserId(userId);
+            hashMap.put("userInfo",userInfo);
+            return ResBean.ok("ok",hashMap);
         }
     }
 

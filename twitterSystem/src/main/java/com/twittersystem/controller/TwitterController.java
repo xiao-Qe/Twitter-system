@@ -4,14 +4,17 @@ import com.twittersystem.bean.Constant;
 import com.twittersystem.bean.ResBean;
 import com.twittersystem.module.Classify;
 import com.twittersystem.module.InsertTwitter;
+import com.twittersystem.module.TwitterDisplay;
 import com.twittersystem.service.IClassifyService;
 import com.twittersystem.service.ITwitterService;
+import com.twittersystem.utils.JWTUtil;
 import com.twittersystem.utils.TwitterUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -33,7 +36,7 @@ public class TwitterController {
 
     @ApiOperation("获取所有大分类id及分类名")
     @GetMapping("/get_super_id")
-    public ResBean getSuperClass(){
+    public ResBean getSuperClass(HttpServletRequest request){
         List<Classify> superClassify = classifyService.getAllSuperClassify();
         return ResBean.ok("ok",superClassify);
     }
@@ -60,6 +63,16 @@ public class TwitterController {
         }else {
             return ResBean.unauthorized("添加发生错误");
         }
+    }
 
+    @ApiOperation("获取文章展示内容")
+    @GetMapping("/get_twitter_display")
+    public ResBean getTwitterDisplay(@NotNull @RequestParam("twitterId")Long twitterId){
+        TwitterDisplay twitterDisplay = twitterService.getTwitterDisplay(twitterId);
+        if(twitterDisplay == null){
+            return ResBean.unauthorized("发生异常，请重试");
+        }else {
+            return ResBean.ok("ok",twitterDisplay);
+        }
     }
 }

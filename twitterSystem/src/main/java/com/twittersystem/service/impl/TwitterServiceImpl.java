@@ -3,6 +3,8 @@ package com.twittersystem.service.impl;
 import com.twittersystem.mapper.TwitterMapper;
 import com.twittersystem.mapper.TwitterScoreMapper;
 import com.twittersystem.module.InsertTwitter;
+import com.twittersystem.module.TwitterDisplay;
+import com.twittersystem.module.TwitterInfo;
 import com.twittersystem.service.ITwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,11 @@ public class TwitterServiceImpl implements ITwitterService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public TwitterDisplay getTwitterDisplay(Long twitterId) {
+        return twitterMapper.selectTwitterDisplay(twitterId);
     }
 
 

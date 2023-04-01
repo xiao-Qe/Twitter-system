@@ -7,27 +7,20 @@ import lombok.NoArgsConstructor;
 /**
  * @author xiaoQe
  * @version 1.0
- * @data 2023/3/29 18:01
- * 文章展示传出的类
+ * @data 2023/4/1 16:33
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TwitterInfo {
+public class TwitterDisplay {
     //id
     private Long id;
-    //分类id
-    private Integer classifyId;
     //创建时间
     private Long creatTime;
     //标题
     private String title;
-    //类型
-    private Integer type;
-    //状态
-    private Integer state;
     //作者id
-    private Long authorId;
+    private String author;
     //简介
     private String blurb;
     //内容
@@ -38,6 +31,4 @@ public class TwitterInfo {
     private Integer like;
     //收藏
     private Integer collect;
-    //评分
-    private Integer score;
 }

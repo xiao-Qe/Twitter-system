@@ -14,7 +14,7 @@ public interface ISystemService {
      * @date 2023/3/28 16:02
      * @version 1.0
      */
-    public Boolean registerUser(String userName,String password);
+    public String registerUser(Long userId, String userName,String password);
 
     /**
      * @description: 用户登录生成token

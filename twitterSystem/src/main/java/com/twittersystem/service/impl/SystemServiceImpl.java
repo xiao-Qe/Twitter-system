@@ -22,12 +22,14 @@ public class SystemServiceImpl implements ISystemService {
     private UserMapper userMapper;
 
     @Override
-    public Boolean registerUser(String userName, String password) {
-        Long userId = Calendar.getInstance().getTimeInMillis();
+    public String registerUser(Long userId,String userName, String password) {
         String newPassword = Constant.PASSWORD_BEFORE + password + Constant.PASSWORD_AFTER;
         User user = new User(userName, userId, newPassword,Constant.USER);
         Integer accountRole =  userMapper.insertUser(user);
-        return accountRole != 0;
+        if(accountRole == 0){
+            return null;
+        }
+        return JWTUtil.creatToken(userId);
     }
 
     @Override

@@ -26,6 +26,9 @@
             <if test="password != null">
                 password,
             </if>
+            <if test="power != null">
+                power,
+            </if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="userName != null">
@@ -36,6 +39,9 @@
             </if>
             <if test="password != null">
                 MD5(#{password}),
+            </if>
+            <if test="power != null">
+                #{power},
             </if>
         </trim>
     </insert>

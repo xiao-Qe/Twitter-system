@@ -65,4 +65,12 @@
             </if>
         </trim>
     </insert>
+<!--    TwitterDisplay selectTwitterInfo(Long twitterId);-->
+    <select id="selectTwitterDisplay" resultType="com.twittersystem.module.TwitterDisplay">
+        select id,UNIX_TIMESTAMP(creat_time) as creat_time,title,user_name as author,blurb,content,`view`,`like`,collect
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+              twitter.author_id = user.user_id and
+              twitter.id = #{twitterId}
+    </select>
 </mapper>

@@ -20,21 +20,16 @@
 
 <script setup>
 
-import {twitterEntity} from "@/store/twitterEntity";
+import {twitterIndex} from "@/store/twitterIndex";
 import router from "@/router";
 
 
-const entity = twitterEntity();
+const entity = twitterIndex();
 defineProps(['item']);
 
 function getTwitter(item){
   entity.$patch({
-    title:item.title,
-    author:item.author,
-    blurb:item.blurb,
-    content:item.content,
-    like:item.like,
-    collect:item.collect
+    id:item.id
   })
   router.push({
     path:"/twitter"

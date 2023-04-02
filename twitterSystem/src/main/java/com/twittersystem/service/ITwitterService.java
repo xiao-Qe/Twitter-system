@@ -1,8 +1,11 @@
 package com.twittersystem.service;
 
 import com.twittersystem.module.InsertTwitter;
+import com.twittersystem.module.TwitterCard;
 import com.twittersystem.module.TwitterDisplay;
 import com.twittersystem.module.TwitterInfo;
+
+import java.util.List;
 
 /**
  * @author xiaoQe
@@ -26,4 +29,12 @@ public interface ITwitterService {
      * @version 1.0
      */
     TwitterDisplay getTwitterDisplay(Long twitterId);
+
+    /**
+     * @description: 获取文章展示集合
+     * @author xiaoQe
+     * @date 2023/4/1 17:29
+     * @version 1.0
+     */
+    List<TwitterCard> getTwitterCardList();
 }

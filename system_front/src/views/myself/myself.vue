@@ -29,11 +29,13 @@
 
 <script setup>
 
-import {reactive, ref, watch} from "vue";
+import {onBeforeMount, reactive, ref, watch} from "vue";
 import {useRoute} from "vue-router/dist/vue-router";
 import ShowCard from "@/components/showCard";
 import AddTwitter from "@/components/AddTwitter";
 import {User} from '@/store/user.js';
+import {getTwitterCardList} from "@/api/pubilc/getTwitterCardList";
+import {ElMessage} from "element-plus";
 
 //是否是添加
 const isAdd = ref(false);
@@ -45,33 +47,31 @@ const userIdAndName = User();
 
 let  twitter = ref([
   {
+    id : 0,
     title: '标题1',
     author: '作者',
     blurb: '简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1' +
         '简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1',
-    content: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容' +
-        '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容\n -内容内容内容内容内容内容内容内容内容' +
-        '内容内容内容内容内容\n内容内容内容内容内容',
+    view : 0,
     like: 20,
     collect: 30
-  },
-  {
-    title: '标题2',
-    author: '作者1',
-    blurb: '简介2',
-    content: '内容',
-    like: 18,
-    collect: 32
-  },
-  {
-    title: '标题3',
-    author: '作者2',
-    blurb: '简介3',
-    content: '内容',
-    like: 290,
-    collect: 80
   }
 ]);
+
+//请求展示卡片
+async function getTwitterCards() {
+  const resBean = await getTwitterCardList();
+  if(resBean.data.status === 200){
+    twitter.value = resBean.data.data
+  }else {
+    ElMessage.error(resBean.data.msg)
+  }
+}
+
+onBeforeMount(()=>{
+  getTwitterCards();
+})
+
 let user = reactive({
   name:'',
   userId:0,
@@ -91,6 +91,9 @@ function refresh(){
   //刷新页面
 
 }
+
+
+
 function resetData() {
   if (route.path === '/user/essay') {
     title.value = '作品'

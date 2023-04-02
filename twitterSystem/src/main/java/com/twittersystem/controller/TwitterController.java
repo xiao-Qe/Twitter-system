@@ -4,6 +4,7 @@ import com.twittersystem.bean.Constant;
 import com.twittersystem.bean.ResBean;
 import com.twittersystem.module.Classify;
 import com.twittersystem.module.InsertTwitter;
+import com.twittersystem.module.TwitterCard;
 import com.twittersystem.module.TwitterDisplay;
 import com.twittersystem.service.IClassifyService;
 import com.twittersystem.service.ITwitterService;
@@ -73,6 +74,17 @@ public class TwitterController {
             return ResBean.unauthorized("发生异常，请重试");
         }else {
             return ResBean.ok("ok",twitterDisplay);
+        }
+    }
+
+    @ApiOperation("请求展示卡片")
+    @GetMapping("/get_twitter_card")
+    public ResBean getTwitterCard(){
+        List<TwitterCard> twitterCardList = twitterService.getTwitterCardList();
+        if(twitterCardList.isEmpty()){
+            return ResBean.unauthorized("发生异常，请重试");
+        }else {
+            return ResBean.ok("ok",twitterCardList);
         }
     }
 }

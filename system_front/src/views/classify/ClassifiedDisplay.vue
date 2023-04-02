@@ -19,10 +19,11 @@
 import { reactive, ref, watch} from 'vue'
 import {useRoute} from "vue-router/dist/vue-router";
 import ShowCard from "@/components/showCard";
-import {getClassifyBySuperId} from "@/api/twitter/addTwitter";
+import {getClassifyBySuperId} from "@/api/myself/addTwitter";
 import {ElMessage} from "element-plus";
+import {getTwitterCardList} from "@/api/pubilc/getTwitterCardList";
 
-  //选中的id
+//选中的id
   let activeId = ref(0);
   let title = ref('');
   let classify = ref([{
@@ -34,35 +35,19 @@ import {ElMessage} from "element-plus";
 
 let  twitter = ref([
   {
+    id : 0,
     title: '标题1',
     author: '作者',
     blurb: '简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1' +
         '简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1',
-    content: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容' +
-        '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容\n -内容内容内容内容内容内容内容内容内容' +
-        '内容内容内容内容内容\n内容内容内容内容内容',
+    view : 0,
     like: 20,
     collect: 30
-  },
-  {
-    title: '标题2',
-    author: '作者1',
-    blurb: '简介2',
-    content: '内容',
-    like: 18,
-    collect: 32
-  },
-  {
-    title: '标题3',
-    author: '作者2',
-    blurb: '简介3',
-    content: '内容',
-    like: 290,
-    collect: 80
   }
 ]);
 
   resetData();
+  getTwitterCards();
 
   //选中改变样式
   function checked(Id){
@@ -90,6 +75,7 @@ let  twitter = ref([
       }
     }
 
+    //请求方法
     async function getClassify(superId) {
      const resBean = await getClassifyBySuperId(superId)
       if(resBean.data.status === 200){
@@ -98,6 +84,15 @@ let  twitter = ref([
         ElMessage.error(resBean.data.msg)
       }
       activeId.value = classify.value[0].classifyId
+    }
+    //请求展示卡片
+    async function getTwitterCards() {
+      const resBean = await getTwitterCardList();
+      if(resBean.data.status === 200){
+        twitter.value = resBean.data.data
+      }else {
+        ElMessage.error(resBean.data.msg)
+      }
     }
 
   watch(() => route.path,()=>{resetData()})

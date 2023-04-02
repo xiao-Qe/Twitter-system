@@ -5,7 +5,7 @@
       <h2 class="title">{{ twitter.title }}</h2>
       <!-- 文章描述 -->
       <h6 class="description">
-        <i class="icon iconfont icon-riqi"></i>&nbsp;2019-10-12
+        <el-icon><Timer /></el-icon>&nbsp;{{time}}
         &nbsp;&nbsp;
         <el-icon>
           <Avatar/>
@@ -23,16 +23,20 @@
       <div class="text" v-html="twitter.content"></div>
       <!-- 对应点击事件 -->
       <div class="tag-box">
-        <el-icon>
-          <View/>
-        </el-icon>
-        {{ twitter.like }}&nbsp;&nbsp;
-        <el-icon><Star/></el-icon>{{ twitter.collect }}&nbsp;&nbsp;
+        <div class="like">
+          <el-icon>
+            <View/>
+          </el-icon>
+          {{ twitter.like }}&nbsp;&nbsp;
+        </div>
+        <div class="collect">
+          <el-icon><Star/></el-icon>{{ twitter.collect }}&nbsp;&nbsp;
+        </div>
         <div class = "comment" @click = "showComment = !showComment">
-        <el-icon >
-        <ChatLineRound/>
-        </el-icon>
-        评论
+          <el-icon >
+          <ChatLineRound/>
+          </el-icon>
+          评论
         </div>
       </div>
       <Comment v-if = "showComment"></Comment>
@@ -41,12 +45,42 @@
 </template>
 
 <script setup>
-import {twitterEntity} from "@/store/twitterEntity";
+import {twitterIndex} from "@/store/twitterIndex";
 import Comment from "@/components/Comment";
-import {ref} from "vue";
+import {onBeforeMount, reactive, ref} from "vue";
+import {getTwitterDisplay} from "@/api/twitter";
+import {ElMessage} from "element-plus";
 
-const twitter = twitterEntity();
+const twitterID = twitterIndex();
+let time = ref('')
 const showComment = ref(false);
+let twitter = ref({
+  id : 0,
+  creatTime : 0,
+  title : '',
+  blurb : '',
+  author : '',
+  like : 0,
+  collect : 0,
+  content : '',
+  view : 0
+})
+onBeforeMount(async () => {
+
+  const resBean = await getTwitterDisplay(twitterID.id)
+  if (resBean.data.status === 200) {
+    twitter.value = resBean.data.data
+  } else {
+    ElMessage.error(resBean.data.msg)
+  }
+
+  const date = new Date(twitter.value.creatTime * 1000)
+
+  time = date.toLocaleDateString();
+})
+
+
+
 
 
 </script>

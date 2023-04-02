@@ -73,4 +73,11 @@
               twitter.author_id = user.user_id and
               twitter.id = #{twitterId}
     </select>
+<!--    List<TwitterCard> selectTwitterCardList();-->
+    <select id="selectTwitterCardList" resultType="com.twittersystem.module.TwitterCard">
+        select id,title,user_name as author,blurb,`view`,`like`,collect
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+            twitter.author_id = user.user_id
+    </select>
 </mapper>

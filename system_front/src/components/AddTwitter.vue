@@ -35,7 +35,7 @@
 <script setup>
 
 import {onBeforeMount, reactive, ref, watch} from 'vue'
-import {getClassifyBySuperId, getSupperId,addTwitter} from "@/api/twitter/addTwitter";
+import {getClassifyBySuperId, getSupperId,addTwitter} from "@/api/myself/addTwitter";
 import {ElMessage} from "element-plus";
 import {User} from '@/store/user.js'
 

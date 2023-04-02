@@ -3,6 +3,7 @@ package com.twittersystem.service.impl;
 import com.twittersystem.mapper.TwitterMapper;
 import com.twittersystem.mapper.TwitterScoreMapper;
 import com.twittersystem.module.InsertTwitter;
+import com.twittersystem.module.TwitterCard;
 import com.twittersystem.module.TwitterDisplay;
 import com.twittersystem.module.TwitterInfo;
 import com.twittersystem.service.ITwitterService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author xiaoQe
@@ -42,6 +44,11 @@ public class TwitterServiceImpl implements ITwitterService {
     @Override
     public TwitterDisplay getTwitterDisplay(Long twitterId) {
         return twitterMapper.selectTwitterDisplay(twitterId);
+    }
+
+    @Override
+    public List<TwitterCard> getTwitterCardList() {
+        return twitterMapper.selectTwitterCardList();
     }
 
 

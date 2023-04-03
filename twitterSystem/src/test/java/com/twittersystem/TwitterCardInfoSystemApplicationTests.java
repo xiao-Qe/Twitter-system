@@ -1,9 +1,12 @@
 package com.twittersystem;
 
 import com.twittersystem.mapper.ClassifyMapper;
+import com.twittersystem.mapper.TwitterScoreMapper;
 import com.twittersystem.mapper.UserMapper;
+import com.twittersystem.module.TwitterScore;
 import com.twittersystem.module.User;
 import com.twittersystem.utils.JWTUtil;
+import com.twittersystem.utils.TwitterScoreUtil;
 import com.twittersystem.utils.TwitterUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,21 @@ class TwitterCardInfoSystemApplicationTests {
 
     @Autowired
     ClassifyMapper classifyMapper;
+
+    @Autowired
+    TwitterScoreMapper twitterScoreMapper;
+
+    @Test
+    void count(){
+        System.out.println(TwitterScoreUtil.getTwitterScore(new TwitterScore(3360166928381L, 3, 10, 3, 30)));
+    }
+
+    @Test
+    void testTwitterScore(){
+//        System.out.println(twitterScoreMapper.selectTwitterScore(3360166928381L));
+        TwitterScore twitterScore = new TwitterScore(3360166928381L, null, 10, 3, 30);
+        System.out.println(twitterScoreMapper.updateTwitterScore(twitterScore));
+    }
 
     @Test
     void contextLoads() {

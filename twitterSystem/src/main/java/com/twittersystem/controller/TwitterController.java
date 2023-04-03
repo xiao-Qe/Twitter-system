@@ -2,13 +2,11 @@ package com.twittersystem.controller;
 
 import com.twittersystem.bean.Constant;
 import com.twittersystem.bean.ResBean;
-import com.twittersystem.module.Classify;
-import com.twittersystem.module.InsertTwitter;
-import com.twittersystem.module.TwitterCard;
-import com.twittersystem.module.TwitterDisplay;
+import com.twittersystem.module.*;
 import com.twittersystem.service.IClassifyService;
 import com.twittersystem.service.ITwitterService;
 import com.twittersystem.utils.JWTUtil;
+import com.twittersystem.utils.TwitterScoreUtil;
 import com.twittersystem.utils.TwitterUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,22 +47,7 @@ public class TwitterController {
         return ResBean.ok("ok",classifyBySuperId);
     }
 
-    @ApiOperation("添加文章")
-    @PostMapping("/add_twitter")
-    public ResBean addTwitter(@Valid @RequestBody InsertTwitter insertTwitter){
-        //获取twitterId
-        Long twitterId = TwitterUtil.getTwitterId(insertTwitter.getAuthorId());
-        //给空属性赋值
-        insertTwitter.setId(twitterId);
-        insertTwitter.setState(Constant.TWITTER_STATE_AUDIT);
 
-        Boolean success = twitterService.addTwitter(insertTwitter);
-        if(success){
-            return ResBean.ok("ok");
-        }else {
-            return ResBean.unauthorized("添加发生错误");
-        }
-    }
 
     @ApiOperation("获取文章展示内容")
     @GetMapping("/get_twitter_display")

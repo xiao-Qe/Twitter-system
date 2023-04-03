@@ -1,6 +1,8 @@
 package com.twittersystem.mapper;
 
+import com.twittersystem.module.TwitterScore;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,29 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface TwitterScoreMapper {
-    @Insert("insert into twitter_score (twitter_id,`view`,`like`,collect,score) values(#{id,jdbcType=BIGINT},0,0,0,0)")
+    /**
+     * @description: 添加数据接口
+     * @author xiaoQe
+     * @date 2023/4/2 15:43
+     * @version 1.0
+     */
+    @Insert("insert into twitter_score (twitter_id,`view`,`like`,collect,score) values(#{id,jdbcType=BIGINT},0,0,0,300)")
     Integer insertScore(Long id);
+
+    /**
+     * @description: 查询文章评分接口
+     * @author xiaoQe
+     * @date 2023/4/2 16:13
+     * @version 1.0
+     */
+    @Select("select twitter_id,`like`,`view`,collect,score from twitter_score where twitter_id = #{twitterId}")
+    TwitterScore selectTwitterScore(Long twitterId);
+
+    /**
+     * @description: 点击文章增加文章评分
+     * @author xiaoQe
+     * @date 2023/4/2 16:08
+     * @version 1.0
+     */
+    Integer updateTwitterScore(TwitterScore twitterScore);
 }

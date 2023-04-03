@@ -1,9 +1,6 @@
 package com.twittersystem.service;
 
-import com.twittersystem.module.InsertTwitter;
-import com.twittersystem.module.TwitterCard;
-import com.twittersystem.module.TwitterDisplay;
-import com.twittersystem.module.TwitterInfo;
+import com.twittersystem.module.*;
 
 import java.util.List;
 
@@ -37,4 +34,20 @@ public interface ITwitterService {
      * @version 1.0
      */
     List<TwitterCard> getTwitterCardList();
+
+    /**
+     * @description: 修改文章评分方法
+     * @author xiaoQe
+     * @date 2023/4/2 17:27
+     * @version 1.0
+     */
+    Integer setTwitterScore(TwitterScore twitterScore);
+
+    /**
+     * @description: 获取文章评分方法
+     * @author xiaoQe
+     * @date 2023/4/2 17:33
+     * @version 1.0
+     */
+    TwitterScore getTwitterScore(Long twitterId);
 }

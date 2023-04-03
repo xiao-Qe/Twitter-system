@@ -2,11 +2,9 @@ package com.twittersystem.service.impl;
 
 import com.twittersystem.mapper.TwitterMapper;
 import com.twittersystem.mapper.TwitterScoreMapper;
-import com.twittersystem.module.InsertTwitter;
-import com.twittersystem.module.TwitterCard;
-import com.twittersystem.module.TwitterDisplay;
-import com.twittersystem.module.TwitterInfo;
+import com.twittersystem.module.*;
 import com.twittersystem.service.ITwitterService;
+import com.twittersystem.utils.TwitterScoreUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,14 +39,34 @@ public class TwitterServiceImpl implements ITwitterService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public TwitterDisplay getTwitterDisplay(Long twitterId) {
-        return twitterMapper.selectTwitterDisplay(twitterId);
+        try {
+            TwitterScore twitterScore =twitterScoreMapper.selectTwitterScore(twitterId);
+            twitterScore.setView(twitterScore.getView() + 1);
+            TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
+            Integer integer = twitterScoreMapper.updateTwitterScore(newTwitterScore);
+            return twitterMapper.selectTwitterDisplay(twitterId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<TwitterCard> getTwitterCardList() {
         return twitterMapper.selectTwitterCardList();
+    }
+
+    @Override
+    public Integer setTwitterScore(TwitterScore twitterScore) {
+        TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
+        return twitterScoreMapper.updateTwitterScore(newTwitterScore);
+    }
+
+    @Override
+    public TwitterScore getTwitterScore(Long twitterId) {
+        return twitterScoreMapper.selectTwitterScore(twitterId);
     }
 
 

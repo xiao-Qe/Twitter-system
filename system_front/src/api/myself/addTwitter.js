@@ -19,7 +19,7 @@ export function getClassifyBySuperId(superId){
 //请求添加文章接口
 export function addTwitter(authorId,title,classifyId,type,blurb,content){
     return request({
-        url : '/twitter/add_twitter',
+        url : '/myself/add_twitter',
         method : 'post',
         data : {
             authorId : authorId,

@@ -1,6 +1,7 @@
 package com.twittersystem.service;
 
 import com.twittersystem.module.*;
+import com.twittersystem.module.recommended.Recommended;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface ITwitterService {
      * @date 2023/4/1 16:21
      * @version 1.0
      */
-    TwitterDisplay getTwitterDisplay(Long twitterId);
+    TwitterDisplay getTwitterDisplay(Long twitterId,Long userId);
 
     /**
      * @description: 获取文章展示集合
@@ -50,4 +51,12 @@ public interface ITwitterService {
      * @version 1.0
      */
     TwitterScore getTwitterScore(Long twitterId);
+
+    /**
+     * @description: 点击喜欢修改文章评分和用户评分方法
+     * @author xiaoQe
+     * @date 2023/4/3 17:24
+     * @version 1.0
+     */
+    Boolean setUserRecommendedAndTwitterScoreByRecommended(Recommended userRecommended);
 }

@@ -19,13 +19,13 @@ public class Recommended {
     //用户id
     private Long userId;
     //推荐
-    private Integer recommend;
+    private Boolean recommend;
     //观看
-    private Integer view;
+    private Boolean view;
     //喜欢
-    private Integer like;
+    private Boolean like;
     //收藏
-    private Integer collect;
+    private Boolean collect;
     //评分
     private Integer grade;
 }

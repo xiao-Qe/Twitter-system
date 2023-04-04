@@ -8,5 +8,20 @@ export function getTwitterDisplay(twitterId){
             twitterId : twitterId
         }
     })
-
+}
+//点击喜欢和收藏对应方法
+export function setRecommendedByLikeAndCollect(twitterId,UserId,recommended,view,like,collect,grade){
+    return request({
+        url : '/twitter/set_userRecommended',
+        method : 'post',
+        data : {
+            userId : UserId,
+            twitterId : twitterId,
+            recommended : recommended,
+            view : view,
+            like : like,
+            collect : collect,
+            grade : grade
+        }
+    })
 }

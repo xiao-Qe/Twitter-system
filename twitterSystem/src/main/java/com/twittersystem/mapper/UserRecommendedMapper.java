@@ -23,6 +23,14 @@ public interface UserRecommendedMapper {
     Recommended selectRecommend(Long userId, Long twitterId);
 
     /**
+     * @description: 修改用户评分
+     * @author xiaoQe
+     * @date 2023/4/3 17:00
+     * @version 1.0
+     */
+    Integer updateRecommended(Recommended userRecommended);
+
+    /**
      * @description: 添加评分
      * @author xiaoQe
      * @date 2023/4/2 17:41

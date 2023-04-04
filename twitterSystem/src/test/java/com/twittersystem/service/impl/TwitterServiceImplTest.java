@@ -19,7 +19,7 @@ class TwitterServiceImplTest {
 
     @Test
     void getTwitterDisplay() {
-        System.out.println(twitterService.getTwitterDisplay(3360234813318L));
+//        System.out.println(twitterService.getTwitterDisplay(3360234813318L));
     }
 
     @Test

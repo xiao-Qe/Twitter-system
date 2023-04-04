@@ -1,10 +1,14 @@
 package com.twittersystem.service.impl;
 
+import com.twittersystem.bean.Constant;
 import com.twittersystem.mapper.TwitterMapper;
 import com.twittersystem.mapper.TwitterScoreMapper;
+import com.twittersystem.mapper.UserRecommendedMapper;
 import com.twittersystem.module.*;
+import com.twittersystem.module.recommended.Recommended;
 import com.twittersystem.service.ITwitterService;
 import com.twittersystem.utils.TwitterScoreUtil;
+import com.twittersystem.utils.UserGradeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +30,9 @@ public class TwitterServiceImpl implements ITwitterService {
     @Autowired
     private TwitterScoreMapper twitterScoreMapper;
 
+    @Autowired
+    private UserRecommendedMapper userRecommendedMapper;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean addTwitter(InsertTwitter insertTwitter) {
@@ -41,12 +48,21 @@ public class TwitterServiceImpl implements ITwitterService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public TwitterDisplay getTwitterDisplay(Long twitterId) {
+    public TwitterDisplay getTwitterDisplay(Long twitterId,Long userId) {
         try {
+            //修改文章评分
             TwitterScore twitterScore =twitterScoreMapper.selectTwitterScore(twitterId);
             twitterScore.setView(twitterScore.getView() + 1);
             TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
             Integer integer = twitterScoreMapper.updateTwitterScore(newTwitterScore);
+
+            //修改用户评分
+            Recommended userRecommended = userRecommendedMapper.selectRecommend(userId, twitterId);
+            userRecommended.setView(true);
+            Recommended userGrade = UserGradeUtil.getUserGrade(userRecommended);
+            Integer integer1 = userRecommendedMapper.updateRecommended(userGrade);
+
+            //返回文章内容
             return twitterMapper.selectTwitterDisplay(twitterId);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -67,6 +83,47 @@ public class TwitterServiceImpl implements ITwitterService {
     @Override
     public TwitterScore getTwitterScore(Long twitterId) {
         return twitterScoreMapper.selectTwitterScore(twitterId);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Boolean setUserRecommendedAndTwitterScoreByRecommended(Recommended userRecommended) {
+        try {
+            //修改twitter评分
+            TwitterScore twitterScore = twitterScoreMapper.selectTwitterScore(userRecommended.getTwitterId());
+            Recommended recommended = userRecommendedMapper.selectRecommend(userRecommended.getUserId(), userRecommended.getTwitterId());
+            //判断like是否改变
+            if(!recommended.getLike().equals(userRecommended.getLike())){
+                if(userRecommended.getLike()){
+                    twitterScore.setLike(twitterScore.getLike() + 1);
+                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
+                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
+                }else {
+                    twitterScore.setLike(twitterScore.getLike() - 1);
+                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
+                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
+                }
+            }
+            //判断collect是否改变
+            if(!recommended.getCollect().equals(userRecommended.getCollect())){
+                if(userRecommended.getCollect()){
+                    twitterScore.setCollect(twitterScore.getCollect() + 1);
+                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
+                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
+                }else {
+                    twitterScore.setCollect(twitterScore.getCollect() - 1);
+                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
+                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
+                }
+            }
+
+            //修改用户评分
+            Recommended userGrade = UserGradeUtil.getUserGrade(userRecommended);
+            userRecommendedMapper.updateRecommended(userGrade);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

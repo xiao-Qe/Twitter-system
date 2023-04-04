@@ -26,4 +26,12 @@ public class Constant {
     public static final Integer TWITTER_STATE_AUDIT = 0;  //审核
     public static final Integer TWITTER_STATE_PASS = 1;  //通过
     public static final Integer TWITTER_STATE_UNDERCARRIAGE = 2;  //下架
+
+    //用户评分表枚举
+    public static final Integer IS_VIEW = 1;
+    public static final Integer NOT_VIEW = 0;
+    public static final Integer IS_LIKE = 1;
+    public static final Integer NOT_LIKE = 0;
+    public static final Integer IS_COLLECT = 1;
+    public static final Integer NOT_COLLECT = 0;
 }

@@ -23,13 +23,22 @@
       <div class="text" v-html="twitter.content"></div>
       <!-- 对应点击事件 -->
       <div class="tag-box">
-        <div class="like">
+        <div v-if="userRecommended.like" @click="setLike" class="like">
+          <el-icon style="color: red">
+            <View/>
+          </el-icon>
+          {{ twitter.like }}&nbsp;&nbsp;
+        </div>
+        <div v-else @click="setLike" class="like">
           <el-icon>
             <View/>
           </el-icon>
           {{ twitter.like }}&nbsp;&nbsp;
         </div>
-        <div class="collect">
+        <div v-if="userRecommended.collect" @click="setCollect" class="collect">
+          <el-icon color="red"><StarFilled /></el-icon>{{ twitter.collect }}&nbsp;&nbsp;
+        </div>
+        <div v-else @click="setCollect" class="collect">
           <el-icon><Star/></el-icon>{{ twitter.collect }}&nbsp;&nbsp;
         </div>
         <div class = "comment" @click = "showComment = !showComment">
@@ -48,12 +57,12 @@
 import {twitterIndex} from "@/store/twitterIndex";
 import Comment from "@/components/Comment";
 import {onBeforeMount, reactive, ref} from "vue";
-import {getTwitterDisplay} from "@/api/twitter";
+import {getTwitterDisplay, setRecommendedByLikeAndCollect} from "@/api/twitter";
 import {ElMessage} from "element-plus";
 
 const twitterID = twitterIndex();
 let time = ref('')
-const showComment = ref(false);
+let showComment = ref(false);
 let twitter = ref({
   id : 0,
   creatTime : 0,
@@ -65,11 +74,24 @@ let twitter = ref({
   content : '',
   view : 0
 })
+
+let userRecommended = ref({
+  userId : 0,
+  twitterId : 0,
+  recommended : false,
+  view : false,
+  like : false,
+  collect : false,
+  grade : 0
+})
 onBeforeMount(async () => {
 
   const resBean = await getTwitterDisplay(twitterID.id)
   if (resBean.data.status === 200) {
-    twitter.value = resBean.data.data
+    const rest = resBean.data.data;
+    twitter.value = rest['twitterDisplay']
+    userRecommended.value = rest['userRecommended']
+    console.log(userRecommended)
   } else {
     ElMessage.error(resBean.data.msg)
   }
@@ -79,7 +101,28 @@ onBeforeMount(async () => {
   time = date.toLocaleDateString();
 })
 
+//点击like和collect事件
+async function setLike() {
+  userRecommended.value.like = !userRecommended.value.like
+  const resBean = await setRecommendedByLikeAndCollect(userRecommended.value.twitterId, userRecommended.value.userId,
+      userRecommended.value.recommended, userRecommended.value.view, userRecommended.value.like,
+      userRecommended.value.collect, userRecommended.value.grade)
+  if (resBean.data.status !== 200) {
+    userRecommended.value.like = !userRecommended.value.like
+    ElMessage.error(resBean.data.msg)
+  }
+}
 
+async function setCollect() {
+  userRecommended.value.collect = !userRecommended.value.collect
+  const resBean = await setRecommendedByLikeAndCollect(userRecommended.value.twitterId, userRecommended.value.userId,
+      userRecommended.value.recommended, userRecommended.value.view, userRecommended.value.like,
+      userRecommended.value.collect, userRecommended.value.grade)
+  if (resBean.data.status !== 200) {
+    userRecommended.value.collect = !userRecommended.value.collect
+    ElMessage.error(resBean.data.msg)
+  }
+}
 
 
 
@@ -119,6 +162,8 @@ onBeforeMount(async () => {
   flex-direction: row;
   justify-content: right;
 }
+.like,
+.collect,
 .comment{
   cursor: pointer;
 }

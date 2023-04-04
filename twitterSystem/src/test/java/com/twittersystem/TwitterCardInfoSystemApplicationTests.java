@@ -3,8 +3,10 @@ package com.twittersystem;
 import com.twittersystem.mapper.ClassifyMapper;
 import com.twittersystem.mapper.TwitterScoreMapper;
 import com.twittersystem.mapper.UserMapper;
+import com.twittersystem.mapper.UserRecommendedMapper;
 import com.twittersystem.module.TwitterScore;
 import com.twittersystem.module.User;
+import com.twittersystem.module.recommended.Recommended;
 import com.twittersystem.utils.JWTUtil;
 import com.twittersystem.utils.TwitterScoreUtil;
 import com.twittersystem.utils.TwitterUtil;
@@ -26,6 +28,15 @@ class TwitterCardInfoSystemApplicationTests {
 
     @Autowired
     TwitterScoreMapper twitterScoreMapper;
+
+    @Autowired
+    UserRecommendedMapper userRecommendedMapper;
+
+    @Test
+    void testUserRecommended(){
+//        System.out.println(userRecommendedMapper.selectRecommend(1679982052952L,3360166928381L));
+//        System.out.println(userRecommendedMapper.updateRecommended(new Recommended(3360166928381L,1679982052952L,1,1,0,1,4)));
+    }
 
     @Test
     void count(){

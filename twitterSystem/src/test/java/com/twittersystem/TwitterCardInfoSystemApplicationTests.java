@@ -1,9 +1,6 @@
 package com.twittersystem;
 
-import com.twittersystem.mapper.ClassifyMapper;
-import com.twittersystem.mapper.TwitterScoreMapper;
-import com.twittersystem.mapper.UserMapper;
-import com.twittersystem.mapper.UserRecommendedMapper;
+import com.twittersystem.mapper.*;
 import com.twittersystem.module.twitter.TwitterScore;
 import com.twittersystem.utils.JWTUtil;
 import com.twittersystem.utils.TwitterScoreUtil;
@@ -28,6 +25,14 @@ class TwitterCardInfoSystemApplicationTests {
 
     @Autowired
     UserRecommendedMapper userRecommendedMapper;
+
+    @Autowired
+    TwitterMapper twitterMapper;
+
+    @Test
+    void testTwitter(){
+        System.out.println(twitterMapper.selectAuditTwitterList());
+    }
 
     @Test
     void testUserRecommended(){

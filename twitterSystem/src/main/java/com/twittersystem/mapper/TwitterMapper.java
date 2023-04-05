@@ -1,5 +1,6 @@
 package com.twittersystem.mapper;
 
+import com.twittersystem.module.twitter.AuditTwitter;
 import com.twittersystem.module.twitter.InsertTwitter;
 import com.twittersystem.module.twitter.TwitterCard;
 import com.twittersystem.module.twitter.TwitterDisplay;
@@ -39,4 +40,12 @@ public interface TwitterMapper {
      * @version 1.0
      */
     List<TwitterCard> selectTwitterCardList();
+
+    /**
+     * @description: 获得审核文章列表
+     * @author xiaoQe
+     * @date 2023/4/5 17:41
+     * @version 1.0
+     */
+    List<AuditTwitter> selectAuditTwitterList();
 }

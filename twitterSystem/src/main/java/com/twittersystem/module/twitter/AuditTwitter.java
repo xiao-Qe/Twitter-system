@@ -17,6 +17,8 @@ public class AuditTwitter {
     private Long twitterId;
     //标题
     private String title;
+    //分类
+    private String classifyName;
     //作者
     private String author;
     //创建时间

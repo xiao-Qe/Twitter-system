@@ -19,8 +19,10 @@
 </template>
 
 <script setup>
-import {reactive, ref, watch} from "vue";
+import {onBeforeMount, reactive, ref, watch} from "vue";
 import {useRoute} from "vue-router/dist/vue-router";
+import {getAuditList} from "@/api/administrator";
+import {ElMessage} from "element-plus";
 
 const handleClick = () => {
   console.log('click')
@@ -31,51 +33,53 @@ let route = reactive(useRoute())
 
 const tableData = ref([
   {
-    title: '2016-05-03',
-    twitterId: 'Tom',
-    author: 'California',
-    classifyId: 'Los Angeles',
-    type: 'No. 189, Grove St, Los Angeles',
-    state: 'CA 90036',
-    creatTime: 'Home',
-  },
-  {
-    title: '2016-05-03',
-    twitterId: 'Tom',
-    author: 'California',
-    classifyId: 'Los Angeles',
-    type: 'No. 189, Grove St, Los Angeles',
-    state: 'CA 90036',
-    creatTime: 'Home',
-  },
-  {
-    title: '2016-05-03',
-    twitterId: 'Tom',
-    author: 'California',
-    classifyId: 'Los Angeles',
-    type: 'No. 189, Grove St, Los Angeles',
-    state: 'CA 90036',
-    creatTime: 'Home',
-  },
-
-  {
-    title: '2016-05-03',
-    twitterId: 'Tom',
-    author: 'California',
-    classifyId: 'Los Angeles',
-    type: 'No. 189, Grove St, Los Angeles',
-    state: 'CA 90036',
-    creatTime: 'Home',
+    title: '',
+    twitterId: 0,
+    author: '',
+    classifyName: '',
+    type: '',
+    state: '',
+    creatTime: '',
   }
 ])
 
+onBeforeMount(async () => {
+  await getList()
+})
+
+//获取列表方法
+async function getList() {
+  const resBean = await getAuditList();
+  if (resBean.data.status === 200) {
+    const data = resBean.data.data
+    data.forEach((AuditTwitter) => {
+          //将数据替换将Long替换为String
+          const date = new Date(AuditTwitter.creatTime * 1000)
+          AuditTwitter.creatTime = date.toLocaleDateString();
+
+          //替换类型
+          if (AuditTwitter.type === 0) {
+            AuditTwitter.type = '私密'
+          } else {
+            AuditTwitter.type = '公开'
+          }
+
+          //替换状态
+          if (AuditTwitter.state === 0) {
+            AuditTwitter.state = '待审核'
+          } else if (AuditTwitter.state === 3) {
+            AuditTwitter.state = '下架'
+          }
+        }
+    )
+    tableData.value = data
+  } else {
+    ElMessage.error(resBean.data.msg)
+  }
+}
 
 function resetData() {
-  if (route.path === '/administrator/audit') {
-    isAudit.value = true
-  } else {
-    isAudit.value = false
-  }
+  isAudit.value = route.path === '/administrator/audit';
 }
 
 resetData();

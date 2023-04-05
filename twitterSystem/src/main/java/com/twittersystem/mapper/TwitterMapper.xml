@@ -81,4 +81,12 @@
             twitter.author_id = user.user_id
         limit 0, 10
     </select>
+<!--    List<AuditTwitter> selectAuditTwitterList();-->
+    <select id="selectAuditTwitterList" resultType="com.twittersystem.module.twitter.AuditTwitter">
+        select twitter.id as twitter_id,title,user_name as author,type,state,UNIX_TIMESTAMP(creat_time) as creat_time,class as classify_name
+        from twitter,user,classify
+        where twitter.author_id = user.user_id and
+              twitter.classify_id = classify.id and
+              twitter.state = 0
+    </select>
 </mapper>

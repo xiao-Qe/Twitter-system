@@ -57,19 +57,19 @@ let  twitter = ref([
 
   function resetData () {
       // 根据不同路由地址，返回不同数据
-      if(route.path === '/user/athletics'){
+      if(route.path === '/user/athletics' || route.path === '/administrator/athletics'){
         title.value = '体育'
         getClassify(1000)
-      }else if (route.path === '/user/amusement'){
+      }else if (route.path === '/user/amusement' || route.path === '/administrator/amusement'){
         title.value = '娱乐'
         getClassify(2000)
-      }else if(route.path === '/user/study'){
+      }else if(route.path === '/user/study' || route.path === '/administrator/study'){
         title.value = '学习'
         getClassify(4000)
-      }else if (route.path === '/user/technology'){
+      }else if (route.path === '/user/technology' || route.path === '/administrator/technology'){
         title.value = '科学'
         getClassify(3000)
-      }else if(route.path === '/user/currentEvents'){
+      }else if(route.path === '/user/currentEvents' || route.path === '/administrator/currentEvents'){
         title.value = '时事'
         getClassify(5000)
       }

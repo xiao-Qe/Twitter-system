@@ -1,18 +1,16 @@
 package com.twittersystem.controller;
 
-import com.twittersystem.bean.Constant;
 import com.twittersystem.bean.ResBean;
 import com.twittersystem.module.*;
 import com.twittersystem.module.recommended.Recommended;
+import com.twittersystem.module.twitter.TwitterCard;
+import com.twittersystem.module.twitter.TwitterDisplay;
 import com.twittersystem.service.IClassifyService;
 import com.twittersystem.service.ITwitterService;
 import com.twittersystem.service.IUserRecommendedService;
 import com.twittersystem.utils.JWTUtil;
-import com.twittersystem.utils.TwitterScoreUtil;
-import com.twittersystem.utils.TwitterUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

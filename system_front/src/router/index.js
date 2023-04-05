@@ -63,10 +63,59 @@ const routes = [
     path: '/administrator',
     name: 'administrator',
     component: Administrator,
+    redirect: '/administrator/recommend',
     children:[
+        //推荐
       {
         path: 'recommend',
         component: () => import('../views/Recommend.vue')
+      },
+      //  分类展示
+      {
+        path: 'athletics',
+        component: () => import('../views/classify/ClassifiedDisplay')
+      },
+      {
+        path: 'amusement',
+        component: () => import('../views/classify/ClassifiedDisplay')
+      },
+      {
+        path: 'study',
+        component: () => import('../views/classify/ClassifiedDisplay')
+      },
+      {
+        path: 'technology',
+        component: () => import('../views/classify/ClassifiedDisplay')
+      },
+      {
+        path: 'currentEvents',
+        component: () => import('../views/classify/ClassifiedDisplay')
+      },
+      //  我的页面
+      {
+        path: 'essay',
+        component: () => import('../views/myself/myself')
+      },
+      {
+        path: 'like',
+        component: () => import('../views/myself/myself')
+      },
+      {
+        path: 'collect',
+        component: () => import('../views/myself/myself')
+      },
+      //管理页面
+      {
+        path: 'audit',
+        component: () => import('../views/manage/Manage')
+      },
+      {
+        path: 'userManage',
+        component: () => import('../views/manage/UserManage')
+      },
+      {
+        path: 'twitterManage',
+        component: () => import('../views/manage/Manage')
       }
     ]
   },

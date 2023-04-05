@@ -1,9 +1,8 @@
 package com.twittersystem.mapper;
 
-import com.twittersystem.module.InsertTwitter;
-import com.twittersystem.module.TwitterCard;
-import com.twittersystem.module.TwitterDisplay;
-import com.twittersystem.module.TwitterInfo;
+import com.twittersystem.module.twitter.InsertTwitter;
+import com.twittersystem.module.twitter.TwitterCard;
+import com.twittersystem.module.twitter.TwitterDisplay;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 

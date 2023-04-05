@@ -2,7 +2,7 @@ package com.twittersystem.controller;
 
 import com.twittersystem.bean.Constant;
 import com.twittersystem.bean.ResBean;
-import com.twittersystem.module.InsertTwitter;
+import com.twittersystem.module.twitter.InsertTwitter;
 import com.twittersystem.service.ITwitterService;
 import com.twittersystem.utils.TwitterUtil;
 import io.swagger.annotations.ApiOperation;

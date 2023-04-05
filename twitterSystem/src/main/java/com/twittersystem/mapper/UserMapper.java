@@ -35,6 +35,6 @@ public interface UserMapper {
     @Select("select user_id from user where user_id = #{userId} and password = MD5(#{password})")
     Long selectUser(Long userId,String password);
 
-    @Select("select user_name,user_id from user where user_id = #{userId}")
+    @Select("select user_name,user_id,power from user where user_id = #{userId}")
     User selectFromUserId(Long userId);
 }

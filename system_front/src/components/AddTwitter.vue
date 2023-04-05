@@ -76,7 +76,7 @@ let specificClassification = ref([
     //标题验证规则
     title:[
         {required: true, message: '请输入标题', trigger: 'blur'},
-        {min: 3, max: 20, message: '标题长度应在 3 到 20 个字符', trigger: 'blur'}
+        {min: 3, max: 50, message: '标题长度应在 3 到 50 个字符', trigger: 'blur'}
     ],
     //简介验证规则
     blurb:[

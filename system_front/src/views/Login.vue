@@ -140,7 +140,12 @@ const validatePass1 = () => {
             })
           }
           window.localStorage.setItem("authorization",info['token'])
-          await router.push("/user")
+          if(info['userInfo'].power === 1){
+            await router.push("/administrator")
+          }else {
+            await router.push("/user")
+          }
+
         }
         else {
           ElMessage.error(resBean.data.msg)

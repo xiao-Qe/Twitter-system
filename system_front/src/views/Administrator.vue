@@ -1,79 +1,74 @@
 <template>
   <el-container class="layout-container-demo" style="height: 100vh">
-    <el-aside width="200px">
-      <el-scrollbar>
-        <el-menu :default-openeds="['1', '3']">
-          <el-sub-menu index="1">
-            <template #title>
-              <el-icon><message /></el-icon>Navigator One
-            </template>
-            <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="1-1">Option 1</el-menu-item>
-              <el-menu-item index="1-2">Option 2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="1-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="1-4">
-              <template #title>Option4</template>
-              <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
-          </el-sub-menu>
-          <el-sub-menu index="2">
-            <template #title>
-              <el-icon><icon-menu /></el-icon>Navigator Two
-            </template>
-            <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="2-1">Option 1</el-menu-item>
-              <el-menu-item index="2-2">Option 2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="2-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="2-4">
-              <template #title>Option 4</template>
-              <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
-          </el-sub-menu>
-          <el-sub-menu index="3">
-            <template #title>
-              <el-icon><setting /></el-icon>Navigator Three
-            </template>
-            <el-menu-item-group>
-              <template #title>Group 1</template>
-              <el-menu-item index="3-1">Option 1</el-menu-item>
-              <el-menu-item index="3-2">Option 2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="3-3">Option 3</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="3-4">
-              <template #title>Option 4</template>
-              <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
-          </el-sub-menu>
-        </el-menu>
-      </el-scrollbar>
+    <el-aside width="200px" class="side">
+      <el-menu
+          router>
+        <el-menu-item index="/administrator/recommend">
+          <template #title><el-icon><House /></el-icon>
+            推荐
+          </template>
+        </el-menu-item>
+        <el-sub-menu index="classify">
+          <template #title>
+            <el-icon><Grid /></el-icon>分类
+          </template>
+          <el-menu-item index="/administrator/athletics">
+            <template #title>体育</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/amusement">
+            <template #title>娱乐</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/study">
+            <template #title>学习</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/technology">
+            <template #title>科学</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/currentEvents">
+            <template #title>时事</template>
+          </el-menu-item>
+        </el-sub-menu>
+        <el-sub-menu index="myself">
+          <template #title><el-icon><User /></el-icon>
+            我的
+          </template>
+          <el-menu-item index = "/administrator/essay">
+            <template #title>作品</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/like">
+            <template #title>喜欢</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/collect">
+            <template #title>收藏</template>
+          </el-menu-item>
+        </el-sub-menu>
+        <el-sub-menu>
+          <template #title>
+            <el-icon><Tools /></el-icon>
+            管理
+          </template>
+          <el-menu-item index="/administrator/audit">
+            <template #title>作品审核</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/twitterManage">
+            <template #title>作品管理</template>
+          </el-menu-item>
+          <el-menu-item index="/administrator/userManage">
+            <template #title>用户管理</template>
+          </el-menu-item>
+        </el-sub-menu>
+      </el-menu>
     </el-aside>
 
     <el-container>
-      <el-header style="text-align: right; font-size: 12px">
+      <el-header style="text-align: left; font-size: 1px">
+        <input class = "search">
         <div class="toolbar">
-          <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px"
-            ><setting
-            /></el-icon>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>View</el-dropdown-item>
-                <el-dropdown-item>Add</el-dropdown-item>
-                <el-dropdown-item>Delete</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-          <span>Tom</span>
+
+          <el-icon style="margin-right: 8px; margin-top: 5px" size="20px">
+            <Search />
+          </el-icon>
+          <span>搜索</span>
         </div>
       </el-header>
 
@@ -84,9 +79,13 @@
   </el-container>
 </template>
 
-<script setup>
+<script>
+import router from "../router/index.js";
 
-
+export default {
+  name: "Administrator",
+  date: {}
+}
 </script>
 
 <style scoped>
@@ -95,21 +94,30 @@
   background-color: var(--el-color-primary-light-7);
   color: var(--el-text-color-primary);
 }
+
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
 }
+
 .layout-container-demo .el-menu {
   border-right: none;
 }
+
 .layout-container-demo .el-main {
   padding: 0;
 }
+
 .layout-container-demo .toolbar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  right: 20px;
+  height: 80%;
+  left: 10px;
+}
+
+.search{
+  width: 93%;
+  height: 50%;
 }
 </style>

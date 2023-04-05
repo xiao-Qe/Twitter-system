@@ -1,4 +1,4 @@
-package com.twittersystem.module;
+package com.twittersystem.module.twitter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

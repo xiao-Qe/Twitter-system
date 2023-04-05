@@ -1,6 +1,6 @@
 package com.twittersystem.utils;
 
-import com.twittersystem.module.TwitterScore;
+import com.twittersystem.module.twitter.TwitterScore;
 import org.springframework.stereotype.Component;
 
 import java.text.DecimalFormat;

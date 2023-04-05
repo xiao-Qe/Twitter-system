@@ -1,6 +1,6 @@
 package com.twittersystem.mapper;
 
-import com.twittersystem.module.TwitterScore;
+import com.twittersystem.module.twitter.TwitterScore;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;

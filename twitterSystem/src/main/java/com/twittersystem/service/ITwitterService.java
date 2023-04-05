@@ -1,7 +1,10 @@
 package com.twittersystem.service;
 
-import com.twittersystem.module.*;
 import com.twittersystem.module.recommended.Recommended;
+import com.twittersystem.module.twitter.InsertTwitter;
+import com.twittersystem.module.twitter.TwitterCard;
+import com.twittersystem.module.twitter.TwitterDisplay;
+import com.twittersystem.module.twitter.TwitterScore;
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ public interface ITwitterService {
      * @date 2023/4/1 16:21
      * @version 1.0
      */
-    TwitterDisplay getTwitterDisplay(Long twitterId,Long userId);
+    TwitterDisplay getTwitterDisplay(Long twitterId, Long userId);
 
     /**
      * @description: 获取文章展示集合

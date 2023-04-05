@@ -4,9 +4,7 @@ import com.twittersystem.mapper.ClassifyMapper;
 import com.twittersystem.mapper.TwitterScoreMapper;
 import com.twittersystem.mapper.UserMapper;
 import com.twittersystem.mapper.UserRecommendedMapper;
-import com.twittersystem.module.TwitterScore;
-import com.twittersystem.module.User;
-import com.twittersystem.module.recommended.Recommended;
+import com.twittersystem.module.twitter.TwitterScore;
 import com.twittersystem.utils.JWTUtil;
 import com.twittersystem.utils.TwitterScoreUtil;
 import com.twittersystem.utils.TwitterUtil;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Calendar;
-import java.util.Date;
 
 @SpringBootTest
 class TwitterCardInfoSystemApplicationTests {
@@ -76,7 +73,8 @@ class TwitterCardInfoSystemApplicationTests {
     @Test
     void testInsertUser(){
 //        System.out.println(userMapper.insertUser(new User("xiaoQe2",new Long(Calendar.getInstance().getTimeInMillis()),"123456789")));
-        System.out.println(new Date());
+//        System.out.println(new Date());
+        System.out.println(userMapper.selectFromUserId(1680595759132L));
     }
 
     @Test

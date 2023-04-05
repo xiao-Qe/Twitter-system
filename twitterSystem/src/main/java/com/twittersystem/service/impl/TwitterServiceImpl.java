@@ -1,11 +1,13 @@
 package com.twittersystem.service.impl;
 
-import com.twittersystem.bean.Constant;
 import com.twittersystem.mapper.TwitterMapper;
 import com.twittersystem.mapper.TwitterScoreMapper;
 import com.twittersystem.mapper.UserRecommendedMapper;
-import com.twittersystem.module.*;
 import com.twittersystem.module.recommended.Recommended;
+import com.twittersystem.module.twitter.InsertTwitter;
+import com.twittersystem.module.twitter.TwitterCard;
+import com.twittersystem.module.twitter.TwitterDisplay;
+import com.twittersystem.module.twitter.TwitterScore;
 import com.twittersystem.service.ITwitterService;
 import com.twittersystem.utils.TwitterScoreUtil;
 import com.twittersystem.utils.UserGradeUtil;
@@ -48,7 +50,7 @@ public class TwitterServiceImpl implements ITwitterService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public TwitterDisplay getTwitterDisplay(Long twitterId,Long userId) {
+    public TwitterDisplay getTwitterDisplay(Long twitterId, Long userId) {
         try {
             //修改文章评分
             TwitterScore twitterScore =twitterScoreMapper.selectTwitterScore(twitterId);

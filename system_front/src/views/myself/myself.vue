@@ -95,11 +95,11 @@ function refresh(){
 
 
 function resetData() {
-  if (route.path === '/user/essay') {
+  if (route.path === '/user/essay' || route.path === '/administrator/essay') {
     title.value = '作品'
-  } else if (route.path === '/user/like') {
+  } else if (route.path === '/user/like' || route.path === '/administrator/like') {
     title.value = '喜欢'
-  } else if (route.path === '/user/collect') {
+  } else if (route.path === '/user/collect' || route.path === '/administrator/collect') {
     title.value = '收藏'
   }
 }

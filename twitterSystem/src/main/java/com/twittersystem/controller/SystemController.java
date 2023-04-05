@@ -1,5 +1,6 @@
 package com.twittersystem.controller;
 
+import com.twittersystem.bean.Constant;
 import com.twittersystem.bean.ResBean;
 import com.twittersystem.module.User;
 import com.twittersystem.service.ISystemService;
@@ -38,6 +39,7 @@ public class SystemController {
             User userInfo = new User();
             userInfo.setUserName(user.getUserName());
             userInfo.setUserId(userId);
+            userInfo.setPower(Constant.USER);
             hashMap.put("userInfo",userInfo);
             return ResBean.ok("ok",hashMap);
         }

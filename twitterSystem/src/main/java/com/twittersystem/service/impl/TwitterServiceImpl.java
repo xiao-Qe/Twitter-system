@@ -58,9 +58,16 @@ public class TwitterServiceImpl implements ITwitterService {
 
             //修改用户评分
             Recommended userRecommended = userRecommendedMapper.selectRecommend(userId, twitterId);
-            userRecommended.setView(true);
-            Recommended userGrade = UserGradeUtil.getUserGrade(userRecommended);
-            Integer integer1 = userRecommendedMapper.updateRecommended(userGrade);
+            if(userRecommended == null){
+                Recommended newRecommended = new Recommended(twitterId,userId,false,false,false,false,0);
+                newRecommended.setView(true);
+                Recommended userGrade = UserGradeUtil.getUserGrade(newRecommended);
+                userRecommendedMapper.insertUserRecommended(userGrade);
+            }else {
+                userRecommended.setView(true);
+                Recommended userGrade = UserGradeUtil.getUserGrade(userRecommended);
+                Integer integer1 = userRecommendedMapper.updateRecommended(userGrade);
+            }
 
             //返回文章内容
             return twitterMapper.selectTwitterDisplay(twitterId);
@@ -96,26 +103,20 @@ public class TwitterServiceImpl implements ITwitterService {
             if(!recommended.getLike().equals(userRecommended.getLike())){
                 if(userRecommended.getLike()){
                     twitterScore.setLike(twitterScore.getLike() + 1);
-                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
-                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
                 }else {
                     twitterScore.setLike(twitterScore.getLike() - 1);
-                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
-                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
                 }
             }
             //判断collect是否改变
             if(!recommended.getCollect().equals(userRecommended.getCollect())){
                 if(userRecommended.getCollect()){
                     twitterScore.setCollect(twitterScore.getCollect() + 1);
-                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
-                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
                 }else {
                     twitterScore.setCollect(twitterScore.getCollect() - 1);
-                    TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
-                    twitterScoreMapper.updateTwitterScore(newTwitterScore);
                 }
             }
+            TwitterScore newTwitterScore = TwitterScoreUtil.getTwitterScore(twitterScore);
+            twitterScoreMapper.updateTwitterScore(newTwitterScore);
 
             //修改用户评分
             Recommended userGrade = UserGradeUtil.getUserGrade(userRecommended);

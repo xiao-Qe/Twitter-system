@@ -43,9 +43,9 @@
 
 <script setup>
 import router from "@/router";
-import {reactive, ref} from "vue";
+import {h, reactive, ref} from "vue";
 import {registerUser,loginUser} from '@/api/login/index.js'
-import { ElMessage } from 'element-plus'
+import {ElMessage, ElMessageBox} from 'element-plus'
 import {User} from '@/store/user.js'
 
 const userInfo = User();
@@ -93,7 +93,7 @@ const validatePass1 = () => {
     // 设置账户效验规则
     username: [
       {required: true, message: '请输入账户', trigger: 'blur'},
-      {min: 3, max: 10, message: '长度在 3 到 10 个字符的账户', trigger: 'blur'},
+      {min: 3, max: 20, message: '长度在 3 到 20 个字符的账户', trigger: 'blur'},
     ],
     //用户id输入规则
     userId:[
@@ -130,6 +130,15 @@ const validatePass1 = () => {
             userId:info['userInfo'].userId,
             userName:info['userInfo'].userName
           })
+          if(confirmPassword.value){
+            await ElMessageBox({
+                title : '注册成功',
+                message : h('p',null,[
+                    h('h3',null,'ID号为：'+info['userInfo'].userId),
+                  h('h3',null,'名字为：'+info['userInfo'].userName)
+                ])
+            })
+          }
           window.localStorage.setItem("authorization",info['token'])
           await router.push("/user")
         }

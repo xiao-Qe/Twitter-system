@@ -111,6 +111,11 @@ async function setLike() {
     userRecommended.value.like = !userRecommended.value.like
     ElMessage.error(resBean.data.msg)
   }
+  if(userRecommended.value.like === true){
+    twitter.value.like++;
+  }else {
+    twitter.value.like--;
+  }
 }
 
 async function setCollect() {
@@ -121,6 +126,11 @@ async function setCollect() {
   if (resBean.data.status !== 200) {
     userRecommended.value.collect = !userRecommended.value.collect
     ElMessage.error(resBean.data.msg)
+  }
+  if(userRecommended.value.collect === true){
+    twitter.value.collect++;
+  }else {
+    twitter.value.collect--;
   }
 }
 

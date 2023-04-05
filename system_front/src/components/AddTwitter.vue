@@ -150,7 +150,7 @@ watch(classify,async (newValue) => {
   width: auto;
 }
 .blurb{
-  width: 400px;
+  width: 800px;
   height: 70px;
 }
 

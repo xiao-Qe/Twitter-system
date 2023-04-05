@@ -79,5 +79,6 @@
         from twitter,twitter_score,user
         where twitter.id = twitter_score.twitter_id and
             twitter.author_id = user.user_id
+        limit 0, 10
     </select>
 </mapper>

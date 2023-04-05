@@ -22,4 +22,54 @@
             where twitter_id = #{twitterId} and user_id = #{userId}
         </set>
     </update>
+<!--    Integer insertUserRecommended(Recommended recommended);-->
+    <insert id="insertUserRecommended">
+        insert into user_recommended
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="twitterId != null">
+                twitter_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="recommend != null">
+                recommend,
+            </if>
+            <if test="view != null">
+                `view`,
+            </if>
+            <if test="like != null">
+                `like`,
+            </if>
+            <if test="collect != null">
+                `collect`,
+            </if>
+            <if test="grade != null">
+                `grade`,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="twitterId != null">
+                #{twitterId},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="recommend != null">
+                #{recommend},
+            </if>
+            <if test="view != null">
+                #{view},
+            </if>
+            <if test="like != null">
+                #{like},
+            </if>
+            <if test="collect != null">
+                #{collect},
+            </if>
+            <if test="grade != null">
+                #{grade},
+            </if>
+        </trim>
+    </insert>
 </mapper>

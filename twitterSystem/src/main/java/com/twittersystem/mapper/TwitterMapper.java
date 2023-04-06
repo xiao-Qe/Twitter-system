@@ -1,9 +1,6 @@
 package com.twittersystem.mapper;
 
-import com.twittersystem.module.twitter.AuditTwitter;
-import com.twittersystem.module.twitter.InsertTwitter;
-import com.twittersystem.module.twitter.TwitterCard;
-import com.twittersystem.module.twitter.TwitterDisplay;
+import com.twittersystem.module.twitter.*;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -48,4 +45,20 @@ public interface TwitterMapper {
      * @version 1.0
      */
     List<AuditTwitter> selectAuditTwitterList();
+
+    /**
+     * @description: 获得管理员页面展示
+     * @author xiaoQe
+     * @date 2023/4/5 18:37
+     * @version 1.0
+     */
+    AdministratorShowTwitter selectAdministratorShowTwitter(Long twitterId);
+
+    /**
+     * @description: 管理员修改文章状态方法
+     * @author xiaoQe
+     * @date 2023/4/6 15:31
+     * @version 1.0
+     */
+    Integer updateState(Long twitterId,Integer state);
 }

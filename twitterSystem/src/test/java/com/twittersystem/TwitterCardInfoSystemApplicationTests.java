@@ -29,6 +29,14 @@ class TwitterCardInfoSystemApplicationTests {
     @Autowired
     TwitterMapper twitterMapper;
 
+    @Autowired
+    UndercarriageCauseMapper undercarriageCauseMapper;
+
+    @Test
+    void testUndercarriage(){
+        System.out.println(undercarriageCauseMapper.updateUndercarriageCause(3360234813318L,"内容不合适"));
+    }
+
     @Test
     void testTwitter(){
         System.out.println(twitterMapper.selectAuditTwitterList());

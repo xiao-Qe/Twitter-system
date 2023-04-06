@@ -89,4 +89,19 @@
               twitter.classify_id = classify.id and
               twitter.state = 0
     </select>
+<!--    AdministratorShowTwitter selectAdministratorShowTwitter(Long twitterId);-->
+    <select id="selectAdministratorShowTwitter" resultType="com.twittersystem.module.twitter.AdministratorShowTwitter">
+        select twitter.id as twitter_id,title,super_class as super_name,type,class as classify_name,blurb,content
+        from twitter,classify
+        where twitter.classify_id = classify.id and
+            twitter.id = #{twitterId}
+    </select>
+<!--Integer updateState(Long twitterId);-->
+    <update id="updateState">
+        update twitter
+        <set>
+            state = #{state}
+        </set>
+        where id = #{twitterId}
+    </update>
 </mapper>

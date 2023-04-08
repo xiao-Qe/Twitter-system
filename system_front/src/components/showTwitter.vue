@@ -1,5 +1,5 @@
 <template>
-  <el-form class="form" ref="form" :disabled="false" :model="formData.form" label-width="120px">
+  <el-form class="form" ref="form" :model="formData.form" label-width="120px">
     <el-form-item label="作品名：" prop="title">
       <el-input v-model="formData.form.title" />
     </el-form-item>
@@ -39,7 +39,7 @@ const user = User();
 
 
 //自定义事件
-const emit = defineEmits(['change','refresh'])
+const emit = defineEmits(['change'])
 
 //表单
 const form = ref(null)

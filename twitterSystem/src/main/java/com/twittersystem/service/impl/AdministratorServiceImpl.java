@@ -85,4 +85,31 @@ public class AdministratorServiceImpl implements IAdministratorService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<User> getUserList(Long userId) {
+        if (!checkPower(userId)){
+            return null;
+        }
+        return userMapper.selectUserList();
+    }
+
+    @Override
+    public Boolean deleteUser(Long userId, Long administratorId) {
+        if(!checkPower(administratorId)){
+            return null;
+        }
+        int integer = userMapper.deleteUser(userId);
+        return integer != 0 ;
+    }
+
+    @Override
+    public Boolean setUser(Long userId,User user) {
+        if(!checkPower(userId)){
+            return null;
+        }
+        user.setPassword(Constant.PASSWORD_BEFORE + user.getPassword() + Constant.PASSWORD_AFTER);
+        int integer = userMapper.updateUser(user);
+        return integer != 0 ;
+    }
 }

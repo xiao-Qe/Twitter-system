@@ -36,3 +36,32 @@ export function setTwitterUndercarriage(twitterId,cause){
         }
     })
 }
+//获得用户列表方法
+export function getUserList(){
+    return request({
+        url : '/administrator/get_user_list',
+        method : 'get'
+    })
+}
+//删除用户方法
+export function deleteUser(userId){
+    return request({
+        url : '/administrator/delete_user',
+        method : 'get',
+        params : {
+            userId : userId
+        }
+    })
+}
+//修改用户密码方法
+export function setUser(userId,userName,password){
+    return request({
+        url : '/administrator/set_user',
+        method : 'post',
+        data : {
+            userId : userId,
+            userName : userName,
+            password : password
+        }
+    })
+}

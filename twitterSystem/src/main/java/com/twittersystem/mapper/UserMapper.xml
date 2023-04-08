@@ -45,4 +45,17 @@
             </if>
         </trim>
     </insert>
+<!--    Integer updateUser(User user);-->
+    <update id="updateUser">
+        update user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="password != null">
+                password = MD5(#{password})
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
 </mapper>

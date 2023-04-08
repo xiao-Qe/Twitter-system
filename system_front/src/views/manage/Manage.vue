@@ -3,7 +3,7 @@
     <el-table-column prop="title" label="标题" width="380" />
     <el-table-column prop="twitterId" label="文章ID" width="140" />
     <el-table-column prop="author" label="作者" width="120" />
-    <el-table-column prop="type" label="作品类型" width="120" />
+    <el-table-column prop="type" label="作品类型" width="90" />
     <el-table-column prop="state" label="作品状态" width="100" />
     <el-table-column prop="creatTime" label="创建时间" width="120" />
     <el-table-column fixed="right" label="操作" width="140">

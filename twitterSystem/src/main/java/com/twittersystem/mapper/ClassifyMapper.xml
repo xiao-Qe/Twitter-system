@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twittersystem.mapper.ClassifyMapper">
+
+    <resultMap id="superClass" type="java.util.Map">
+        <result property="classifyId" column="super_id" javaType="java.lang.Integer"></result>
+        <result property="className" column="super_class" javaType="java.lang.String"></result>
+        <result property="classifyId" column="id" javaType="java.lang.Integer"></result>
+        <result property="className" column="class" javaType="java.lang.String"></result>
+    </resultMap>
+    <select id="selectSuperClass" resultMap="superClass">
+        select super_id,super_class from classify group by super_id,super_class
+    </select>
+<!--    List<Classify> selectClassBySuperId(Integer superId);-->
+    <select id="selectClassBySuperId" resultMap="superClass">
+        select id,class from classify where super_id = #{superId}
+    </select>
+</mapper>

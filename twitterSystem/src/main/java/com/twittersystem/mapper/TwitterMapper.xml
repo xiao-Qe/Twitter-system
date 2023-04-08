@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twittersystem.mapper.TwitterMapper">
+<!--    Integer insertTwitter(InsertTwitter insertTwitter);-->
+    <insert id="insertTwitter">
+        insert into twitter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="insertTwitter.id != null">
+                id,
+            </if>
+            <if test="insertTwitter.classifyId != null">
+                classify_id,
+            </if>
+            <if test="insertTwitter.type != null">
+                `type`,
+            </if>
+            <if test="insertTwitter.state != null">
+                `state`,
+            </if>
+            <if test="insertTwitter.title != null">
+                title,
+            </if>
+            <if test="insertTwitter.authorId != null">
+                author_id,
+            </if>
+            <if test="insertTwitter.blurb != null">
+                blurb,
+            </if>
+            <if test="insertTwitter.content != null">
+                content,
+            </if>
+            <if test="creatTime != null">
+                creat_time,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="insertTwitter.id != null">
+                #{insertTwitter.id,jdbcType=BIGINT},
+            </if>
+            <if test="insertTwitter.classifyId != null">
+                #{insertTwitter.classifyId},
+            </if>
+            <if test="insertTwitter.type != null">
+                #{insertTwitter.type},
+            </if>
+            <if test="insertTwitter.state != null">
+                #{insertTwitter.state},
+            </if>
+            <if test="insertTwitter.title != null">
+                #{insertTwitter.title},
+            </if>
+            <if test="insertTwitter.authorId != null">
+                #{insertTwitter.authorId,jdbcType=BIGINT},
+            </if>
+            <if test="insertTwitter.blurb != null">
+                #{insertTwitter.blurb},
+            </if>
+            <if test="insertTwitter.content != null">
+                #{insertTwitter.content},
+            </if>
+            <if test="creatTime != null">
+                FROM_UNIXTIME(#{creatTime,jdbcType=BIGINT}, '%Y-%m-%d %H:%i:%s'),
+            </if>
+        </trim>
+    </insert>
+<!--    TwitterDisplay selectTwitterInfo(Long twitterId);-->
+    <select id="selectTwitterDisplay" resultType="com.twittersystem.module.twitter.TwitterDisplay">
+        select id,UNIX_TIMESTAMP(creat_time) as creat_time,title,user_name as author,blurb,content,`view`,`like`,collect
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+              twitter.author_id = user.user_id and
+              twitter.id = #{twitterId}
+    </select>
+<!--    List<TwitterCard> selectTwitterCardList();-->
+    <select id="selectTwitterCardList" resultType="com.twittersystem.module.twitter.TwitterCard">
+        select id,title,user_name as author,blurb,`view`,`like`,collect
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+            twitter.author_id = user.user_id
+        limit 0, 10
+    </select>
+<!--    List<AuditTwitter> selectAuditTwitterList();-->
+    <select id="selectAuditTwitterList" resultType="com.twittersystem.module.twitter.AuditTwitter">
+        select twitter.id as twitter_id,title,user_name as author,type,state,UNIX_TIMESTAMP(creat_time) as creat_time,class as classify_name
+        from twitter,user,classify
+        where twitter.author_id = user.user_id and
+              twitter.classify_id = classify.id and
+              twitter.state = 0
+    </select>
+<!--    AdministratorShowTwitter selectAdministratorShowTwitter(Long twitterId);-->
+    <select id="selectAdministratorShowTwitter" resultType="com.twittersystem.module.twitter.AdministratorShowTwitter">
+        select twitter.id as twitter_id,title,super_class as super_name,type,class as classify_name,blurb,content
+        from twitter,classify
+        where twitter.classify_id = classify.id and
+            twitter.id = #{twitterId}
+    </select>
+<!--Integer updateState(Long twitterId);-->
+    <update id="updateState">
+        update twitter
+        <set>
+            state = #{state}
+        </set>
+        where id = #{twitterId}
+    </update>
+</mapper>

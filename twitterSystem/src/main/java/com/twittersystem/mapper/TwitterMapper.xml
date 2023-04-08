@@ -104,4 +104,28 @@
         </set>
         where id = #{twitterId}
     </update>
+<!--    List<TwitterCard> selectLikeList(Long userId);-->
+    <select id="selectLikeList" resultType="com.twittersystem.module.twitter.TwitterCard">
+        select id,title,user_name as author,blurb,twitter_score.view as `view`,twitter_score.like as`like`,twitter_score.collect as collect
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+            twitter.author_id = user.user_id and
+                twitter.id in (
+                select twitter_id
+                from user_recommended
+                where user_id = #{twitterId} and `like` = 1
+            )
+    </select>
+<!--    List<TwitterCard> selectCollectList(Long userId);-->
+    <select id="selectCollectList" resultType="com.twittersystem.module.twitter.TwitterCard">
+        select id,title,user_name as author,blurb,twitter_score.view as `view`,twitter_score.like as`like`,twitter_score.collect as collect
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+            twitter.author_id = user.user_id and
+           twitter.id in (
+            select twitter_id
+            from user_recommended
+            where user_id = #{twitterId} and collect = 1
+        )
+    </select>
 </mapper>

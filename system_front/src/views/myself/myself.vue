@@ -25,6 +25,7 @@
   </teleport>
 
   <show-card  v-if="twitter !== undefined || twitter.length > 0"  v-for="item in twitter" :item="item"></show-card>
+  <el-empty   v-show="twitter.length === 0" description="无内容，赶快去观看新的内容吧"></el-empty>
 </template>
 
 <script setup>
@@ -36,6 +37,7 @@ import AddTwitter from "@/components/AddTwitter";
 import {User} from '@/store/user.js';
 import {getTwitterCardList} from "@/api/pubilc/getTwitterCardList";
 import {ElMessage} from "element-plus";
+import {getCollectList, getLikeList} from "@/api/myself/myself";
 
 //是否是添加
 const isAdd = ref(false);
@@ -46,26 +48,29 @@ const userIdAndName = User();
 
 
 let  twitter = ref([
-  {
-    id : 0,
-    title: '标题1',
-    author: '作者',
-    blurb: '简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1' +
-        '简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1简介1',
-    view : 0,
-    like: 20,
-    collect: 30
-  }
+
 ]);
 
 //请求展示卡片
 async function getTwitterCards() {
-  const resBean = await getTwitterCardList();
-  if(resBean.data.status === 200){
-    twitter.value = resBean.data.data
-  }else {
-    ElMessage.error(resBean.data.msg)
+  console.log('请求')
+  if(title.value === '喜欢'){
+    const resBean = await getLikeList();
+    if(resBean.data.status === 200){
+      twitter.value = resBean.data.data
+    }else {
+      ElMessage.error(resBean.data.msg)
+    }
   }
+  if(title.value === '收藏'){
+    const resBean = await getCollectList();
+    if(resBean.data.status === 200){
+      twitter.value = resBean.data.data
+    }else {
+      ElMessage.error(resBean.data.msg)
+    }
+  }
+
 }
 
 onBeforeMount(()=>{
@@ -104,10 +109,11 @@ function resetData() {
   }
 }
 
-resetData();
 
-watch(() => route.path, () => {
+watch(() => route.path, async () => {
   resetData()
+  console.log(title.value)
+  await getTwitterCards()
 })
 </script>
 

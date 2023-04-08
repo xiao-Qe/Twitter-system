@@ -35,7 +35,8 @@ class TwitterCardInfoSystemApplicationTests {
     @Test
     void testUndercarriage(){
 //        System.out.println(undercarriageCauseMapper.updateUndercarriageCause(3360234813318L,"内容不合适"));
-        System.out.println(userMapper.selectUserList());
+//        System.out.println(userMapper.selectUserList());
+        System.out.println(twitterMapper.selectCollectList(1679982052952L));
     }
 
     @Test

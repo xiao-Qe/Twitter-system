@@ -128,4 +128,44 @@
             where user_id = #{twitterId} and collect = 1
         )
     </select>
+<!--    List<TwitterCard> selectMyselfList(Long userId);-->
+    <select id="selectMyselfList" resultType="com.twittersystem.module.twitter.TwitterCard">
+        select id,title,user_name as author,blurb,`view`,`like`,collect,state
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+            twitter.author_id = user.user_id and
+            twitter.author_id = #{userId}
+    </select>
+<!--    UpdateTwitter selectUpdateTwitterByTwitterId(Long twitterId);-->
+    <select id="selectUpdateTwitterByTwitterId" resultType="com.twittersystem.module.twitter.UpdateTwitter">
+        select twitter.id,title,super_id, classify_id,type,author_id,blurb,content
+        from twitter,classify
+        where twitter.classify_id = classify.id and
+              twitter.id = #{twitterId}
+    </select>
+<!--    Integer updateTwitter(InsertTwitter insertTwitter);-->
+    <update id="updateTwitter">
+        update twitter
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="state != null">
+                `state` = #{state},
+            </if>
+            <if test="title != null">
+                `title` = #{title},
+            </if>
+            <if test="blurb != null">
+                blurb = #{blurb},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="classifyId != null">
+                classify_id = #{classifyId}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

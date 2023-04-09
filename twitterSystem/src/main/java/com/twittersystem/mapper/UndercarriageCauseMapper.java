@@ -1,6 +1,7 @@
 package com.twittersystem.mapper;
 
 import com.twittersystem.module.UndercarriageCause;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -41,4 +42,22 @@ public interface UndercarriageCauseMapper {
      */
     @Update("update undercarriage_cause set cause = #{cause} where twitter_id = #{twitterId}")
     Integer updateUndercarriageCause(Long twitterId,String cause);
+
+    /**
+     * @description: 查询未通过原因
+     * @author xiaoQe
+     * @date 2023/4/9 15:45
+     * @version 1.0
+     */
+    @Select("select cause from undercarriage_cause where twitter_id = #{twitterId}")
+    String selectCause(Long twitterId);
+
+    /**
+     * @description: 删除用户
+     * @author xiaoQe
+     * @date 2023/4/9 15:58
+     * @version 1.0
+     */
+    @Delete("delete from undercarriage_cause where twitter_id = #{twitterId}")
+    Integer deleteCause(Long twitterId);
 }

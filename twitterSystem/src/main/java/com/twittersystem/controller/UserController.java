@@ -2,7 +2,9 @@ package com.twittersystem.controller;
 
 import com.twittersystem.bean.ResBean;
 import com.twittersystem.module.User;
+import com.twittersystem.module.twitter.InsertTwitter;
 import com.twittersystem.module.twitter.TwitterCard;
+import com.twittersystem.module.twitter.UpdateTwitter;
 import com.twittersystem.service.IUserService;
 import com.twittersystem.utils.JWTUtil;
 import io.swagger.annotations.ApiOperation;
@@ -55,5 +57,44 @@ public class UserController {
         Long userId = JWTUtil.getUserIdFromToken(token);
         List<TwitterCard> collectList = userService.getCollectList(userId);
         return ResBean.ok("ok",collectList);
+    }
+
+    @ApiOperation("获取用户作品列表")
+    @GetMapping("/get_myself_list")
+    public ResBean getMyselfList(HttpServletRequest request){
+        String token = request.getHeader("token");
+        Long userId = JWTUtil.getUserIdFromToken(token);
+        List<TwitterCard> collectList = userService.getMyselfList(userId);
+        return ResBean.ok("ok",collectList);
+    }
+
+    @ApiOperation("获取修改展示类")
+    @GetMapping("/get_update_twitter")
+    public ResBean getUpdateTwitter(@NotNull @RequestParam("twitterId")Long twitterId){
+        UpdateTwitter updateTwitterByTwitterId = userService.getUpdateTwitterByTwitterId(twitterId);
+        if(updateTwitterByTwitterId == null){
+            return ResBean.unauthorized("请求出错");
+        }
+        return ResBean.ok("ok",updateTwitterByTwitterId);
+    }
+
+    @ApiOperation("用户修改文章")
+    @PostMapping("/set_twitter")
+    public ResBean setTwitter(@Valid @RequestBody InsertTwitter insertTwitter){
+        Boolean success = userService.setTwitter(insertTwitter);
+        if(!success){
+            return ResBean.unauthorized("请求错误，请重试");
+        }
+        return ResBean.ok("ok");
+    }
+
+    @ApiOperation("获取未通过原因")
+    @GetMapping("/get_cause")
+    public ResBean getCause(@NotNull @RequestParam("twitterId") Long twitterId){
+        String cause = userService.getCause(twitterId);
+        if(cause == null){
+            return ResBean.unauthorized("请求错误，请重试");
+        }
+        return ResBean.ok("ok",cause);
     }
 }

@@ -24,8 +24,16 @@
     </div>
   </teleport>
 
-  <show-card  v-if="twitter !== undefined || twitter.length > 0"  v-for="item in twitter" :item="item"></show-card>
+
+  <show-card  v-if=" twitter !== undefined || twitter.length > 0 "  v-for="item in twitter" :item="item"
+              @update="updateTwitter"></show-card>
   <el-empty   v-show="twitter.length === 0" description="无内容，赶快去观看新的内容吧"></el-empty>
+
+  <teleport to="body">
+    <div v-if="isUpdate" class = "mask">
+      <AddTwitter @refresh="refresh" @change = "changeIsUpdate" :twitterID="twitterID"></AddTwitter>
+    </div>
+  </teleport>
 </template>
 
 <script setup>
@@ -37,7 +45,8 @@ import AddTwitter from "@/components/AddTwitter";
 import {User} from '@/store/user.js';
 import {getTwitterCardList} from "@/api/pubilc/getTwitterCardList";
 import {ElMessage} from "element-plus";
-import {getCollectList, getLikeList} from "@/api/myself/myself";
+import {getCollectList, getLikeList, getMyselfList} from "@/api/myself/myself";
+
 
 //是否是添加
 const isAdd = ref(false);
@@ -53,7 +62,14 @@ let  twitter = ref([
 
 //请求展示卡片
 async function getTwitterCards() {
-  console.log('请求')
+  if(title.value === '作品'){
+    const resBean = await getMyselfList();
+    if(resBean.data.status === 200){
+      twitter.value = resBean.data.data
+    }else {
+      ElMessage.error(resBean.data.msg)
+    }
+  }
   if(title.value === '喜欢'){
     const resBean = await getLikeList();
     if(resBean.data.status === 200){
@@ -74,6 +90,7 @@ async function getTwitterCards() {
 }
 
 onBeforeMount(()=>{
+  resetData()
   getTwitterCards();
 })
 
@@ -91,11 +108,27 @@ function changeIsAdd(){
 }
 
 //关闭addTwitter并且刷新页面
-function refresh(){
-  isAdd.value = false;
+async function refresh() {
   //刷新页面
-
+  await getTwitterCards()
+  isAdd.value = false;
+  isUpdate.value = false;
 }
+
+
+//是否是修改
+let isUpdate = ref(false)
+let twitterID = ref(0)
+//myself时修改twitter操作
+function updateTwitter(twitterId){
+  twitterID.value = twitterId
+  isUpdate.value = true
+}
+//关闭操作
+function changeIsUpdate(){
+  isUpdate.value = false
+}
+
 
 
 
@@ -112,7 +145,6 @@ function resetData() {
 
 watch(() => route.path, async () => {
   resetData()
-  console.log(title.value)
   await getTwitterCards()
 })
 </script>

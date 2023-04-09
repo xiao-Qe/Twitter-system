@@ -57,13 +57,19 @@ public class AdministratorServiceImpl implements IAdministratorService {
         return twitterMapper.selectAdministratorShowTwitter(twitterId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean setTwitterStatePass(Long twitterId, Long userId) {
-        if (!checkPower(userId)){
-            return null;
+        try {
+            if (!checkPower(userId)){
+                return null;
+            }
+            int a = twitterMapper.updateState(twitterId,Constant.TWITTER_STATE_PASS);
+            undercarriageCauseMapper.deleteCause(twitterId);
+            return a != 0;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        int a = twitterMapper.updateState(twitterId,Constant.TWITTER_STATE_PASS);
-        return a != 0;
     }
 
     @Transactional(rollbackFor = Exception.class)

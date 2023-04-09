@@ -31,3 +31,29 @@ export function addTwitter(authorId,title,classifyId,type,blurb,content){
         }
     })
 }
+//获取修改类
+export function getUpdateTwitter(twitterId){
+    return request({
+        url : '/user/get_update_twitter',
+        method : 'get',
+        params : {
+            twitterId : twitterId
+        }
+    })
+}
+//修改文章方法
+export function setTwitter(twitterId,authorId,type,title,blurb,content,classifyId){
+    return request({
+        url : '/user/set_twitter',
+        method : 'post',
+        data : {
+            id : twitterId,
+            authorId : authorId,
+            type : type,
+            title : title,
+            blurb : blurb,
+            content : content,
+            classifyId : classifyId
+        }
+    })
+}

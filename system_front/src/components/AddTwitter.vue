@@ -5,18 +5,18 @@
     </el-form-item>
     <el-form-item label="作品类型：">
       <el-select v-model="classify" placeholder="请选择作品分类">
-        <el-option v-for="classify in superClassify"  :label="classify.className" :value="classify.classifyId"  />
+        <el-option v-for="classify in superClassify" :key="classify.classifyId" :label="classify.className" :value="classify.classifyId"  />
       </el-select>
     </el-form-item>
     <el-form-item label="具体类型：">
-      <el-select v-model="formData.form.classify" placeholder="请选择作品分类">
-        <el-option v-for="classify in specificClassification"  :label="classify.className" :value="classify.classifyId"  />
+      <el-select v-model="classifyId" placeholder="请选择作品分类">
+        <el-option v-for="classify in specificClassification" :key="classify.classifyId" :label="classify.className" :value="classify.classifyId"  />
       </el-select>
     </el-form-item>
     <el-form-item label="作品类型">
       <el-radio-group v-model="formData.form.type">
-        <el-radio label="0" >私密</el-radio>
-        <el-radio label="1" >公开</el-radio>
+        <el-radio :label="0" >私密</el-radio>
+        <el-radio :label="1" >公开</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item label="作品简介" prop="blurb">
@@ -34,8 +34,8 @@
 
 <script setup>
 
-import {onBeforeMount, reactive, ref, watch} from 'vue'
-import {getClassifyBySuperId, getSupperId,addTwitter} from "@/api/myself/addTwitter";
+import {onBeforeMount, onMounted, reactive, ref, watch} from 'vue'
+import {getClassifyBySuperId, getSupperId, addTwitter, getUpdateTwitter, setTwitter} from "@/api/myself/addTwitter";
 import {ElMessage} from "element-plus";
 import {User} from '@/store/user.js'
 
@@ -53,21 +53,22 @@ let superClassify = ref([
   className:''}
 ]);
 //选中的大类
-const classify = ref(undefined)
+let classify = ref(undefined)
 //具体分类
 let specificClassification = ref([
   {classifyId:0,
     className:''}
 ]);
 
+let classifyId = ref(undefined)
 //表单数据
-  const formData =   reactive({
+  const formData =   ref({
       form:{
         title: '',
-        classify: undefined,
         type: 0,
         blurb: '',
-        content:''
+        content:'',
+        authorId:0
       }
   });
 
@@ -100,13 +101,17 @@ let specificClassification = ref([
 
 function goSubmit(){
     form.value.validate(async (valid) => {
-      console.log(formData.form)
       //表单验证是否通过
       if (valid) {
-        const resBean =  await addTwitter(user.userId,formData.form.title,formData.form.classify,formData.form.type,formData.form.blurb,formData.form.content)
+        let resBean = ref({})
+        if(props.twitterID === null){
+           resBean =  await addTwitter(user.userId,formData.value.form.title,classifyId.value,formData.value.form.type,formData.value.form.blurb,formData.value.form.content)
+        }else {
+           resBean = await setTwitter(props.twitterID, formData.value.form.authorId, formData.value.form.type, formData.value.form.title, formData.value.form.blurb, formData.value.form.content, classifyId.value)
+        }
         //判断是否添加成功
         if(resBean.data.status === 200){
-          ElMessage.success('添加成功')
+          ElMessage.success('操作成功')
           //触发事件，让父类重新刷新页面
           emit('refresh')
         }else {
@@ -127,11 +132,28 @@ emit('change')
 
 //事件监听获取superId
 watch(classify,async (newValue) => {
-  const resBean = await getClassifyBySuperId(newValue)
-  if(resBean.data.status === 200){
+  await getList(newValue)
+})
+async function getList(classify) {
+  const resBean = await getClassifyBySuperId(classify)
+  if (resBean.data.status === 200) {
     specificClassification.value = resBean.data.data
-  }else {
+  } else {
     ElMessage.error(resBean.data.msg)
+  }
+}
+
+//修改时操作
+const props = defineProps(['twitterID'])
+onBeforeMount(async () => {
+
+  if (props.twitterID !== undefined) {
+    const resBean = await getUpdateTwitter(props.twitterID)
+    if(resBean.data.status === 200){
+      classify.value = resBean.data.data.superId
+      classifyId.value = resBean.data.data.classifyId
+      formData.value.form = resBean.data.data
+    }
   }
 })
 

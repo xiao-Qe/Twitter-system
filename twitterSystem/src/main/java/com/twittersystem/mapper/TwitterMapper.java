@@ -61,4 +61,44 @@ public interface TwitterMapper {
      * @version 1.0
      */
     Integer updateState(Long twitterId,Integer state);
+
+    /**
+     * @description: 用户获取喜欢列表
+     * @author xiaoQe
+     * @date 2023/4/8 17:13
+     * @version 1.0
+     */
+    List<TwitterCard> selectLikeList(Long userId);
+
+    /**
+     * @description: 用户收藏列表
+     * @author xiaoQe
+     * @date 2023/4/8 17:28
+     * @version 1.0
+     */
+    List<TwitterCard> selectCollectList(Long userId);
+
+    /**
+     * @description: TODO
+     * @author xiaoQe
+     * @date 2023/4/8 18:16
+     * @version 1.0
+     */
+    List<TwitterCard> selectMyselfList(Long userId);
+
+    /**
+     * @description: 返回修改类
+     * @author xiaoQe
+     * @date 2023/4/9 14:14
+     * @version 1.0
+     */
+    UpdateTwitter selectUpdateTwitterByTwitterId(Long twitterId);
+
+    /**
+     * @description: 用户修改文章接口
+     * @author xiaoQe
+     * @date 2023/4/9 15:05
+     * @version 1.0
+     */
+    Integer updateTwitter(InsertTwitter insertTwitter);
 }

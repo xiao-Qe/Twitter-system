@@ -4,30 +4,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author xiaoQe
  * @version 1.0
- * @data 2023/3/30 16:06
- * 返回推荐文章时所传出的类
+ * @data 2023/4/9 14:11
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TwitterCard {
+public class UpdateTwitter {
     //id
     private Long id;
+    //父类id
+    private Integer superId;
+    //分类id
+    private Integer classifyId;
     //标题
     private String title;
-    //作者
-    private String author;
+    //类型
+    private Integer type;
+    //作者id
+    @NotNull
+    private Long authorId;
     //简介
     private String blurb;
-    //观看
-    private Integer view;
-    //喜欢
-    private Integer like;
-    //状态
-    private Integer state;
-    //收藏
-    private Integer collect;
+    //内容
+    private String content;
 }

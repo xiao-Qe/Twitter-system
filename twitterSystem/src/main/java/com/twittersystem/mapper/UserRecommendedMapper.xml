@@ -90,4 +90,17 @@
             where `recommend` = 1 and user_id = #{userId}
         )
     </select>
+<!--    List<UserScore> selectUserGrade(Long userId);-->
+    <select id="selectUserGrade" resultType="com.twittersystem.module.system.UserScore">
+        select twitter_id,grade
+        from user_recommended
+        where user_id = #{userId}
+    </select>
+<!--    List<UserScore> selectRecommendedTwitterByUserId(Long userId);-->
+    <select id="selectRecommendedTwitterByUserId" resultType="com.twittersystem.module.system.UserScore">
+        select twitter_id,grade
+        from user_recommended
+        where user_id = #{userId} and
+              `recommend` = 1
+    </select>
 </mapper>

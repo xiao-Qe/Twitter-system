@@ -2,10 +2,7 @@ package com.twittersystem;
 
 import com.twittersystem.mapper.*;
 import com.twittersystem.module.twitter.TwitterScore;
-import com.twittersystem.utils.ItemSimilarityUtil;
-import com.twittersystem.utils.JWTUtil;
-import com.twittersystem.utils.TwitterScoreUtil;
-import com.twittersystem.utils.TwitterUtil;
+import com.twittersystem.utils.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,14 +34,15 @@ class TwitterCardInfoSystemApplicationTests {
     @Test
     void testUtils(){
 //        ItemSimilarityUtil.test();
-        System.out.println(ItemSimilarityUtil.ItemRecommend(1679982052952L,5));
+//        System.out.println(ItemSimilarityUtil.ItemRecommend(1679982052952L,5));
+        System.out.println(UserSimilarityUtil.recommend(1679982052952L,5));
     }
     @Test
     void testUndercarriage(){
-//        System.out.println(undercarriageCauseMapper.updateUndercarriageCause(3360234813318L,"内容不合适"));
 //        System.out.println(userMapper.selectUserList());
 //        System.out.println(twitterMapper.selectUpdateTwitterByTwitterId(3360234663431L));
-        System.out.println(twitterScoreMapper.selectById(2));
+//        System.out.println(twitterScoreMapper.selectById(2));
+        System.out.println(userRecommendedMapper.selectUserGrade(1679982052952L));
     }
 
     @Test

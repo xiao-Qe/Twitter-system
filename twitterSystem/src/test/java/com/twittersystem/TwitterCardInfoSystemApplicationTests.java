@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @SpringBootTest
 class TwitterCardInfoSystemApplicationTests {
@@ -35,7 +37,14 @@ class TwitterCardInfoSystemApplicationTests {
     void testUtils(){
 //        ItemSimilarityUtil.test();
 //        System.out.println(ItemSimilarityUtil.ItemRecommend(1679982052952L,5));
-        System.out.println(UserSimilarityUtil.recommend(1679982052952L,5));
+//        System.out.println(UserSimilarityUtil.recommend(1679982052952L,5));
+        List<Long> recommend = new ArrayList<>();
+        recommend.add(3361194964105L);
+        recommend.add(3361200667203L);
+        recommend.add(3361203572952L);
+        recommend.add(3361203793223L);
+        recommend.add(3361204090470L);
+        System.out.println(twitterMapper.selectRecommendTwitter(recommend));
     }
     @Test
     void testUndercarriage(){

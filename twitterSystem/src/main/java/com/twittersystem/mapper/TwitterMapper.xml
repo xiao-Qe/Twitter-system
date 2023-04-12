@@ -167,4 +167,15 @@
         </set>
         where id = #{id}
     </update>
+<!--    List<TwitterCard> selectRecommendTwitter(List<Long> recommend);-->
+    <select id="selectRecommendTwitter" resultType="com.twittersystem.module.twitter.TwitterCard" parameterType="java.util.List">
+        select twitter.id,title,user_name as author,blurb,`view`,`like`,collect
+        from twitter,twitter_score,user
+        where twitter.id = twitter_score.twitter_id and
+            twitter.author_id = user.user_id and
+            twitter.id in
+            <foreach collection="list" item="recommend" open="(" separator="," close=")">
+                #{recommend}
+            </foreach>
+    </select>
 </mapper>

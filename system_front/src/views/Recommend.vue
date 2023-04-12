@@ -8,6 +8,7 @@ import {onBeforeMount, ref, toRaw} from 'vue'
   import ShowCard from "@/components/showCard";
 import {getTwitterCardList} from "@/api/pubilc/getTwitterCardList";
 import {ElMessage} from "element-plus";
+import {getRecommend} from "@/api/recommend";
 
   let  twitter = ref([
     {
@@ -25,12 +26,13 @@ import {ElMessage} from "element-plus";
 
 //请求展示卡片
 async function getTwitterCards() {
-  const resBean = await getTwitterCardList();
+  const resBean = await getRecommend();
   if(resBean.data.status === 200){
     twitter.value = resBean.data.data
   }else {
     ElMessage.error(resBean.data.msg)
   }
+  console.log(twitter.value)
 }
 
 onBeforeMount(()=>{

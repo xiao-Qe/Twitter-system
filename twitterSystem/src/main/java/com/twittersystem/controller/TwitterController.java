@@ -6,6 +6,7 @@ import com.twittersystem.module.recommended.Recommended;
 import com.twittersystem.module.twitter.TwitterCard;
 import com.twittersystem.module.twitter.TwitterDisplay;
 import com.twittersystem.service.IClassifyService;
+import com.twittersystem.service.IRecommendService;
 import com.twittersystem.service.ITwitterService;
 import com.twittersystem.service.IUserRecommendedService;
 import com.twittersystem.utils.JWTUtil;
@@ -36,6 +37,9 @@ public class TwitterController {
 
     @Autowired
     private IUserRecommendedService userRecommendedService;
+
+    @Autowired
+    private IRecommendService recommendService;
 
     @ApiOperation("获取所有大分类id及分类名")
     @GetMapping("/get_super_id")
@@ -91,5 +95,17 @@ public class TwitterController {
         }else {
             return ResBean.unauthorized("发生错误，请重试");
         }
+    }
+
+    @ApiOperation("推荐方法")
+    @GetMapping("/recommend")
+    public ResBean getRecommend(HttpServletRequest request){
+        String token = request.getHeader("token");
+        Long userId = JWTUtil.getUserIdFromToken(token);
+        List<TwitterCard> twitterCards = recommendService.recommendTwitter(userId);
+        if(twitterCards.isEmpty()){
+            return ResBean.unauthorized("发生错误，请重试");
+        }
+        return ResBean.ok("ok",twitterCards);
     }
 }

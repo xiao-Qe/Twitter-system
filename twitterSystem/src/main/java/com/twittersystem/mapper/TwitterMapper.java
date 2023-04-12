@@ -101,4 +101,12 @@ public interface TwitterMapper {
      * @version 1.0
      */
     Integer updateTwitter(InsertTwitter insertTwitter);
+
+    /**
+     * @description: 查询推荐文章
+     * @author xiaoQe
+     * @date 2023/4/12 17:09
+     * @version 1.0
+     */
+    List<TwitterCard> selectRecommendTwitter(List<Long> recommend);
 }

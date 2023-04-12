@@ -1,5 +1,6 @@
 package com.twittersystem.utils;
 
+import com.twittersystem.mapper.TwitterScoreMapper;
 import com.twittersystem.mapper.UserMapper;
 import com.twittersystem.mapper.UserRecommendedMapper;
 import com.twittersystem.module.system.UserScore;
@@ -19,12 +20,15 @@ import java.util.stream.IntStream;
 public class UserSimilarityUtil {
     private static UserMapper userMapper;
     private static UserRecommendedMapper userRecommendedMapper;
+    private static TwitterScoreMapper twitterScoreMapper;
 
     @Autowired
     public UserSimilarityUtil(UserMapper userMapper,
-                              UserRecommendedMapper userRecommendedMapper){
+                              UserRecommendedMapper userRecommendedMapper,
+                              TwitterScoreMapper twitterScoreMapper){
         UserSimilarityUtil.userMapper = userMapper;
         UserSimilarityUtil.userRecommendedMapper = userRecommendedMapper;
+        UserSimilarityUtil.twitterScoreMapper = twitterScoreMapper;
     }
 
     /**
@@ -95,14 +99,18 @@ public class UserSimilarityUtil {
      * @date 2023/4/12 15:53
      * @version 1.0
      */
-    public static List<Long> recommend(Long userId,Integer recommendNum){
+    public static ArrayList<Long> recommend(Long userId,Integer recommendNum){
         Map<Double, Long> distances = computeNearestNeighbor(userId);
         Iterator<Long> iterator = distances.values().iterator();
 
         ArrayList<Long> recommendation = new ArrayList<>();
         while (recommendation.size() < recommendNum) {
             //最近邻居
+            if(!iterator.hasNext()){
+                break;
+            }
             Long nearest = iterator.next();
+
             //用户看过（评价过的列表）
             List<UserScore> userScores = userRecommendedMapper.selectRecommendedTwitterByUserId(userId);
             //邻居看过的列表
@@ -121,6 +129,11 @@ public class UserSimilarityUtil {
                 }
                 recommendation.add(otherScore.getTwitterId());
             }
+        }
+
+        if(recommendation.size() < recommendNum){
+            List<Long> longs = twitterScoreMapper.selectTwitterIdByScore(userId, recommendNum - recommendation.size());
+            recommendation.addAll(longs);
         }
         Collections.sort(recommendation);
         return recommendation;

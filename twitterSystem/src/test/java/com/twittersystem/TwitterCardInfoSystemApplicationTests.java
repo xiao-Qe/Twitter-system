@@ -2,6 +2,7 @@ package com.twittersystem;
 
 import com.twittersystem.mapper.*;
 import com.twittersystem.module.twitter.TwitterScore;
+import com.twittersystem.utils.ItemSimilarityUtil;
 import com.twittersystem.utils.JWTUtil;
 import com.twittersystem.utils.TwitterScoreUtil;
 import com.twittersystem.utils.TwitterUtil;
@@ -32,11 +33,18 @@ class TwitterCardInfoSystemApplicationTests {
     @Autowired
     UndercarriageCauseMapper undercarriageCauseMapper;
 
+
+    @Test
+    void testUtils(){
+//        ItemSimilarityUtil.test();
+        System.out.println(ItemSimilarityUtil.ItemRecommend(1679982052952L,5));
+    }
     @Test
     void testUndercarriage(){
 //        System.out.println(undercarriageCauseMapper.updateUndercarriageCause(3360234813318L,"内容不合适"));
 //        System.out.println(userMapper.selectUserList());
-        System.out.println(twitterMapper.selectUpdateTwitterByTwitterId(3360234663431L));
+//        System.out.println(twitterMapper.selectUpdateTwitterByTwitterId(3360234663431L));
+        System.out.println(twitterScoreMapper.selectById(2));
     }
 
     @Test
@@ -48,6 +56,8 @@ class TwitterCardInfoSystemApplicationTests {
     void testUserRecommended(){
 //        System.out.println(userRecommendedMapper.selectRecommend(1679982052952L,3360166928381L));
 //        System.out.println(userRecommendedMapper.updateRecommended(new Recommended(3360166928381L,1679982052952L,1,1,0,1,4)));
+//        System.out.println(userRecommendedMapper.selectLikeTwitterByUserId(1679982052952L));
+        System.out.println(twitterScoreMapper.selectTwitterIdByScore(1679982052952L,3));
     }
 
     @Test
@@ -58,8 +68,9 @@ class TwitterCardInfoSystemApplicationTests {
     @Test
     void testTwitterScore(){
 //        System.out.println(twitterScoreMapper.selectTwitterScore(3360166928381L));
-        TwitterScore twitterScore = new TwitterScore(3360166928381L, null, 10, 3, 30);
-        System.out.println(twitterScoreMapper.updateTwitterScore(twitterScore));
+//        TwitterScore twitterScore = new TwitterScore(3360166928381L, null, 10, 3, 30);
+//        System.out.println(twitterScoreMapper.updateTwitterScore(twitterScore));
+        System.out.println(twitterScoreMapper.selectAllTwitter());
     }
 
     @Test
@@ -89,7 +100,8 @@ class TwitterCardInfoSystemApplicationTests {
     void testInsertUser(){
 //        System.out.println(userMapper.insertUser(new User("xiaoQe2",new Long(Calendar.getInstance().getTimeInMillis()),"123456789")));
 //        System.out.println(new Date());
-        System.out.println(userMapper.selectFromUserId(1680595759132L));
+//        System.out.println(userMapper.selectFromUserId(1680595759132L));
+        System.out.println(userMapper.selectAllUser());
     }
 
     @Test

@@ -1,10 +1,14 @@
 package com.twittersystem.mapper;
 
+import com.twittersystem.module.system.TwitterSimilarity;
 import com.twittersystem.module.twitter.TwitterScore;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author xiaoQe
@@ -39,4 +43,30 @@ public interface TwitterScoreMapper {
      * @version 1.0
      */
     Integer updateTwitterScore(TwitterScore twitterScore);
+
+    /**
+     * @description: 查询所有文章
+     * @author xiaoQe
+     * @date 2023/4/10 16:23
+     * @version 1.0
+     */
+    @Select("select id,twitter_id from twitter_score")
+    ArrayList<TwitterSimilarity> selectAllTwitter();
+
+    /**
+     * @description: 查询作品推荐所需的信息
+     * @author xiaoQe
+     * @date 2023/4/11 16:37
+     * @version 1.0
+     */
+    @Select("select id,twitter_id,`like` from twitter_score where id = #{id}")
+    TwitterSimilarity selectById(Integer id);
+
+    /**
+     * @description: 查询评分最高的文章
+     * @author xiaoQe
+     * @date 2023/4/12 14:40
+     * @version 1.0
+     */
+    List<Long> selectTwitterIdByScore(Long userId, Integer selectNum);
 }

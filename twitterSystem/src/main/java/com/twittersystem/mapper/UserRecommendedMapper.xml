@@ -72,4 +72,22 @@
             </if>
         </trim>
     </insert>
+<!--    ArrayList<TwitterSimilarity> selectLikeTwitterByUserId(Long userId);-->
+    <select id="selectLikeTwitterByUserId" resultType="com.twittersystem.module.system.TwitterSimilarity">
+        select id,user_recommended.twitter_id as twitter_id
+        from user_recommended,twitter_score
+        where user_recommended.twitter_id = twitter_score.twitter_id and
+              user_recommended.like = 1 and
+              user_recommended.user_id = #{userId}
+    </select>
+<!--    ArrayList<TwitterSimilarity> selectTwitterNotRecommended(Long userId);-->
+    <select id="selectTwitterNotRecommended" resultType="com.twittersystem.module.system.TwitterSimilarity">
+        select twitter_score.twitter_id,twitter_score.id
+        from twitter_score
+        where twitter_score.twitter_id not in (
+            select twitter_id
+            from user_recommended
+            where `recommend` = 1 and user_id = #{userId}
+        )
+    </select>
 </mapper>

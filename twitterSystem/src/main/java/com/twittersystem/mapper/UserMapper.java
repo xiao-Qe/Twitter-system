@@ -65,4 +65,7 @@ public interface UserMapper {
      * @version 1.0
      */
     Integer updateUser(User user);
+
+    @Select("select user_id from user")
+    List<Long> selectAllUser();
 }

@@ -67,7 +67,7 @@
     </insert>
 <!--    TwitterDisplay selectTwitterInfo(Long twitterId);-->
     <select id="selectTwitterDisplay" resultType="com.twittersystem.module.twitter.TwitterDisplay">
-        select id,UNIX_TIMESTAMP(creat_time) as creat_time,title,user_name as author,blurb,content,`view`,`like`,collect
+        select twitter.id,UNIX_TIMESTAMP(creat_time) as creat_time,title,user_name as author,blurb,content,`view`,`like`,collect
         from twitter,twitter_score,user
         where twitter.id = twitter_score.twitter_id and
               twitter.author_id = user.user_id and
@@ -75,11 +75,10 @@
     </select>
 <!--    List<TwitterCard> selectTwitterCardList();-->
     <select id="selectTwitterCardList" resultType="com.twittersystem.module.twitter.TwitterCard">
-        select id,title,user_name as author,blurb,`view`,`like`,collect
+        select twitter.id,title,user_name as author,blurb,`view`,`like`,collect
         from twitter,twitter_score,user
         where twitter.id = twitter_score.twitter_id and
             twitter.author_id = user.user_id
-        limit 0, 10
     </select>
 <!--    List<AuditTwitter> selectAuditTwitterList();-->
     <select id="selectAuditTwitterList" resultType="com.twittersystem.module.twitter.AuditTwitter">
@@ -106,7 +105,7 @@
     </update>
 <!--    List<TwitterCard> selectLikeList(Long userId);-->
     <select id="selectLikeList" resultType="com.twittersystem.module.twitter.TwitterCard">
-        select id,title,user_name as author,blurb,twitter_score.view as `view`,twitter_score.like as`like`,twitter_score.collect as collect
+        select twitter.id,title,user_name as author,blurb,twitter_score.view as `view`,twitter_score.like as`like`,twitter_score.collect as collect
         from twitter,twitter_score,user
         where twitter.id = twitter_score.twitter_id and
             twitter.author_id = user.user_id and
@@ -118,7 +117,7 @@
     </select>
 <!--    List<TwitterCard> selectCollectList(Long userId);-->
     <select id="selectCollectList" resultType="com.twittersystem.module.twitter.TwitterCard">
-        select id,title,user_name as author,blurb,twitter_score.view as `view`,twitter_score.like as`like`,twitter_score.collect as collect
+        select twitter.id,title,user_name as author,blurb,twitter_score.view as `view`,twitter_score.like as`like`,twitter_score.collect as collect
         from twitter,twitter_score,user
         where twitter.id = twitter_score.twitter_id and
             twitter.author_id = user.user_id and
@@ -130,7 +129,7 @@
     </select>
 <!--    List<TwitterCard> selectMyselfList(Long userId);-->
     <select id="selectMyselfList" resultType="com.twittersystem.module.twitter.TwitterCard">
-        select id,title,user_name as author,blurb,`view`,`like`,collect,state
+        select twitter.id,title,user_name as author,blurb,`view`,`like`,collect,state
         from twitter,twitter_score,user
         where twitter.id = twitter_score.twitter_id and
             twitter.author_id = user.user_id and

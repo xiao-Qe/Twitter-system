@@ -22,6 +22,7 @@ import ShowCard from "@/components/showCard";
 import {getClassifyBySuperId} from "@/api/myself/addTwitter";
 import {ElMessage} from "element-plus";
 import {getTwitterCardList} from "@/api/pubilc/getTwitterCardList";
+import {getListByClassifyId} from "@/api/classified";
 
 //选中的id
   let activeId = ref(0);
@@ -52,28 +53,8 @@ let  twitter = ref([
   //选中改变样式
   function checked(Id){
     activeId.value = Id;
+    getTwitterCards(Id)
   }
-
-
-  function resetData () {
-      // 根据不同路由地址，返回不同数据
-      if(route.path === '/user/athletics' || route.path === '/administrator/athletics'){
-        title.value = '体育'
-        getClassify(1000)
-      }else if (route.path === '/user/amusement' || route.path === '/administrator/amusement'){
-        title.value = '娱乐'
-        getClassify(2000)
-      }else if(route.path === '/user/study' || route.path === '/administrator/study'){
-        title.value = '学习'
-        getClassify(4000)
-      }else if (route.path === '/user/technology' || route.path === '/administrator/technology'){
-        title.value = '科学'
-        getClassify(3000)
-      }else if(route.path === '/user/currentEvents' || route.path === '/administrator/currentEvents'){
-        title.value = '时事'
-        getClassify(5000)
-      }
-    }
 
     //请求方法
     async function getClassify(superId) {
@@ -84,10 +65,11 @@ let  twitter = ref([
         ElMessage.error(resBean.data.msg)
       }
       activeId.value = classify.value[0].classifyId
+      await getTwitterCards(activeId.value)
     }
     //请求展示卡片
-    async function getTwitterCards() {
-      const resBean = await getTwitterCardList();
+    async function getTwitterCards(classifyId) {
+      const resBean = await getListByClassifyId(classifyId);
       if(resBean.data.status === 200){
         twitter.value = resBean.data.data
       }else {
@@ -96,6 +78,26 @@ let  twitter = ref([
     }
 
   watch(() => route.path,()=>{resetData()})
+
+  function resetData () {
+    // 根据不同路由地址，返回不同数据
+    if(route.path === '/user/athletics' || route.path === '/administrator/athletics'){
+      title.value = '体育'
+      getClassify(1000)
+    }else if (route.path === '/user/amusement' || route.path === '/administrator/amusement'){
+      title.value = '娱乐'
+      getClassify(2000)
+    }else if(route.path === '/user/study' || route.path === '/administrator/study'){
+      title.value = '学习'
+      getClassify(4000)
+    }else if (route.path === '/user/technology' || route.path === '/administrator/technology'){
+      title.value = '科学'
+      getClassify(3000)
+    }else if(route.path === '/user/currentEvents' || route.path === '/administrator/currentEvents'){
+      title.value = '时事'
+      getClassify(5000)
+    }
+  }
 </script>
 
 <style scoped>

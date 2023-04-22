@@ -13,11 +13,9 @@ export async function request(config){
     //请求拦截器
     instance.interceptors.request.use(function (config){
         const token = window.localStorage.getItem('authorization');
-        console.log(token)
         //判断是否有登录态token
         if(token !== undefined){
             config.headers.token = token;
-            console.log(config.headers)
         }else {
             router.push('/')
         }

@@ -34,7 +34,6 @@ public class SystemInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!request.getMethod().equals("OPTIONS")) {
             String token = request.getHeader("token");
-            System.out.println(token);
             if (token == null || token.equals("")) {
                 returnJSON(response, mapper.writeValueAsString(ResBean.badRequest(1000, "未登录请先登录")));
                 return false;

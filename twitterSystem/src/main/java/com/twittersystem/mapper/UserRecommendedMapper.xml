@@ -77,7 +77,7 @@
         select id,user_recommended.twitter_id as twitter_id
         from user_recommended,twitter_score
         where user_recommended.twitter_id = twitter_score.twitter_id and
-              user_recommended.like = 1 and
+              user_recommended.view = 1 and
               user_recommended.user_id = #{userId}
     </select>
 <!--    ArrayList<TwitterSimilarity> selectTwitterNotRecommended(Long userId);-->

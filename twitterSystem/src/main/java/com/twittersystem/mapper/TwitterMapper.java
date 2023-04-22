@@ -109,4 +109,12 @@ public interface TwitterMapper {
      * @version 1.0
      */
     List<TwitterCard> selectRecommendTwitter(List<Long> recommend);
+
+    /**
+     * @description: 根据文章分类id获得所有该父类文章
+     * @author xiaoQe
+     * @date 2023/4/22 16:00
+     * @version 1.0
+     */
+    List<TwitterCard> selectClassifyListByClassId(Integer classifyId);
 }

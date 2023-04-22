@@ -62,4 +62,12 @@ public interface ITwitterService {
      * @version 1.0
      */
     Boolean setUserRecommendedAndTwitterScoreByRecommended(Recommended userRecommended);
+
+    /**
+     * @description: 获取分类文章方法
+     * @author xiaoQe
+     * @date 2023/4/22 16:08
+     * @version 1.0
+     */
+    List<TwitterCard> getTwitterListByClassifyId(Integer classifyId);
 }

@@ -18,6 +18,7 @@ import java.util.List;
  * @author xiaoQe
  * @version 1.0
  * @data 2023/4/12 15:14
+ * 推荐service
  */
 @Service
 public class RecommendServiceImpl implements IRecommendService {

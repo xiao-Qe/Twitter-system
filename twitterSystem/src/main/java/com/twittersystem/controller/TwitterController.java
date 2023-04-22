@@ -108,4 +108,14 @@ public class TwitterController {
         }
         return ResBean.ok("ok",twitterCards);
     }
+
+    @ApiOperation("获得分类文章方法")
+    @GetMapping("/get_list_by_classify_id")
+    public ResBean getListByClassifyId(@NotNull @RequestParam("classifyId") Integer classifyId){
+        List<TwitterCard> twitterListByClassifyId = twitterService.getTwitterListByClassifyId(classifyId);
+        if(twitterListByClassifyId.isEmpty()){
+            return ResBean.unauthorized("发生错误，请重试");
+        }
+        return ResBean.ok("ok",twitterListByClassifyId);
+    }
 }

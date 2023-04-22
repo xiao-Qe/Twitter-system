@@ -65,6 +65,7 @@ public class JWTUtil {
      * @author xiaoQe
      * @date 2023/3/29 14:48
      * @version 1.0
+     * @return 需要更新返回true
      */
     public static Boolean checkToken(String token){
         try {

@@ -48,6 +48,7 @@ public class SystemController {
     @ApiOperation("用户登录")
     @PostMapping("/login")
     public ResBean login(@Valid @RequestBody User user){
+        System.out.println("登录");
         String token = systemService.login(user.getUserId(),user.getPassword());
         if(token == null || token.equals("")){
             return ResBean.unauthorized("验证失败");

@@ -26,13 +26,13 @@ import {getRecommend} from "@/api/recommend";
 
 //请求展示卡片
 async function getTwitterCards() {
+  console.log(window.localStorage.getItem("authorization"))
   const resBean = await getRecommend();
   if(resBean.data.status === 200){
     twitter.value = resBean.data.data
   }else {
     ElMessage.error(resBean.data.msg)
   }
-  console.log(twitter.value)
 }
 
 onBeforeMount(()=>{

@@ -1,9 +1,14 @@
 package com.twittersystem.mapper;
 
 import com.twittersystem.module.recommended.Recommended;
+import com.twittersystem.module.system.TwitterSimilarity;
+import com.twittersystem.module.system.UserScore;
 import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author xiaoQe
@@ -37,4 +42,36 @@ public interface UserRecommendedMapper {
      * @version 1.0
      */
     Integer insertUserRecommended(Recommended recommended);
+
+    /**
+     * @description: 寻找喜欢的twitter序号
+     * @author xiaoQe
+     * @date 2023/4/10 16:29
+     * @version 1.0
+     */
+    ArrayList<TwitterSimilarity> selectLikeTwitterByUserId(Long userId);
+
+    /**
+     * @description: 查询所有未推荐过的文章Id
+     * @author xiaoQe
+     * @date 2023/4/12 14:54
+     * @version 1.0
+     */
+    ArrayList<TwitterSimilarity> selectTwitterNotRecommended(Long userId);
+
+    /**
+     * @description: 获取用户评分列表
+     * @author xiaoQe
+     * @date 2023/4/12 15:36
+     * @version 1.0
+     */
+    List<UserScore> selectUserGrade(Long userId);
+
+    /**
+     * @description: 查询推荐过的文章Id
+     * @author xiaoQe
+     * @date 2023/4/12 16:45
+     * @version 1.0
+     */
+    List<UserScore> selectRecommendedTwitterByUserId(Long userId);
 }

@@ -22,4 +22,16 @@
         </set>
             where twitter_id = #{twitterId}
     </update>
+<!--    List<Long> selectTwitterIdByScore(Long userId,Integer selectNum);-->
+    <select id="selectTwitterIdByScore" resultType="java.lang.Long">
+        select twitter_score.twitter_id
+        from twitter_score
+        where twitter_score.twitter_id not in (
+            select twitter_id
+            from user_recommended
+            where `recommend` = 1 and user_id = #{userId}
+        )
+        ORDER BY score
+        limit #{selectNum}
+    </select>
 </mapper>

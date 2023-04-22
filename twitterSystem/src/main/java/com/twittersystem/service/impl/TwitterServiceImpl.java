@@ -129,5 +129,10 @@ public class TwitterServiceImpl implements ITwitterService {
         }
     }
 
+    @Override
+    public List<TwitterCard> getTwitterListByClassifyId(Integer classifyId) {
+        return twitterMapper.selectClassifyListByClassId(classifyId);
+    }
+
 
 }

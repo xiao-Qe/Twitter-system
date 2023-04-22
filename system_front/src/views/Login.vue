@@ -139,7 +139,7 @@ const validatePass1 = () => {
                 ])
             })
           }
-          window.localStorage.setItem("authorization",info['token'])
+          await window.localStorage.setItem("authorization",info['token'])
           if(info['userInfo'].power === 1){
             await router.push("/administrator")
           }else {

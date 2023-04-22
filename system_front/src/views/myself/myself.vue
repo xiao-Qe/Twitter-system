@@ -27,7 +27,7 @@
 
   <show-card  v-if=" twitter !== undefined || twitter.length > 0 "  v-for="item in twitter" :item="item"
               @update="updateTwitter"></show-card>
-  <el-empty   v-show="twitter.length === 0" description="无内容，赶快去观看新的内容吧"></el-empty>
+  <el-empty   v-if="twitter === undefined || twitter === null || twitter.length === 0" description="无内容，赶快去观看新的内容吧"></el-empty>
 
   <teleport to="body">
     <div v-if="isUpdate" class = "mask">

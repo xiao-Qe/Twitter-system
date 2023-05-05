@@ -104,7 +104,7 @@ function goSubmit(){
       //表单验证是否通过
       if (valid) {
         let resBean = ref({})
-        if(props.twitterID === null){
+        if(props.twitterID === undefined){
            resBean =  await addTwitter(user.userId,formData.value.form.title,classifyId.value,formData.value.form.type,formData.value.form.blurb,formData.value.form.content)
         }else {
            resBean = await setTwitter(props.twitterID, formData.value.form.authorId, formData.value.form.type, formData.value.form.title, formData.value.form.blurb, formData.value.form.content, classifyId.value)
@@ -116,6 +116,7 @@ function goSubmit(){
           emit('refresh')
         }else {
           //出错报警
+          console.log(resBean.data)
           ElMessage.error(resBean.data.msg)
         }
       } else {

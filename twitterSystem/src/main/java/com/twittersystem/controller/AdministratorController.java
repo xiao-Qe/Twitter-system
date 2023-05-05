@@ -105,7 +105,7 @@ public class AdministratorController {
         return ResBean.ok("ok");
     }
 
-    @ApiOperation("删除用户")
+    @ApiOperation("修改用户")
     @PostMapping("/set_user")
     public ResBean setUserPassword(@RequestBody User user,
                               HttpServletRequest request){

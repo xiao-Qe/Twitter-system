@@ -113,7 +113,7 @@ public class AdministratorController {
         Long administratorId = JWTUtil.getUserIdFromToken(token);
         Boolean success = administratorService.setUser(administratorId,user);
         if(success == null){
-            return ResBean.unauthorized("无权限删除");
+                return ResBean.unauthorized("无权限删除");
         }
         return ResBean.ok("ok");
     }
